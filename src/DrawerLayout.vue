@@ -128,7 +128,7 @@
                 }
                 if (!this.moving) this.willChange = false;
                 isTouching = undefined;
-                this.$emit('slide-end', pos, this.visible);
+                this.$emit('slide-end', this.pos, this.visible);
                 container.removeEventListener(mouseEvents.move, drag, supportsPassive ? {passive: true} : false);
                 container.removeEventListener(mouseEvents.up, removeDrag, supportsPassive ? {passive: true} : false);
             }.bind(this);
