@@ -1,6 +1,6 @@
 {
   "name": "vue-drawer-layout",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A simple drawer layout component like Android has for Vue.js",
   "main": "dist/vue-drawer-layout.js",
   "module": "dist/vue-drawer-layout.esm.js",
@@ -32,9 +32,6 @@
     "url": "https://github.com/hjl19911127/vue-drawer-layout/issues"
   },
   "homepage": "https://github.com/hjl19911127/vue-drawer-layout#readme",
-  "dependencies": {
-    "vue": "^2.5.9"
-  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -46,6 +43,7 @@
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-vue": "^3.0.0",
+    "vue": "^2.5.9",
     "vue-template-compiler": "^2.5.9"
   },
   "engines": {
