@@ -8,7 +8,7 @@ A simple drawer layout component like Android has for [Vue.js](http://vuejs.org)
 [http://chat.codehuang.com/message](http://chat.codehuang.com/message)
 
 ## Requirements
-* [Vue.js](http://vuejs.org) (^v2.0.0)
+* [Vue.js](http://vuejs.org) (2.x)
 
 ## Browser Support
 Modern browsers and Internet Explorer 10+(due to CSS transition support).
@@ -23,7 +23,6 @@ npm install vue-drawer-layout --save
 
 ## Usage
 
-
 ### ES6
 *The following examples can also be used with CommonJS by replacing ES6-specific syntax with CommonJS equivalents.*
 
@@ -37,33 +36,30 @@ import {DrawerLayout} from 'vue-drawer-layout'
 Vue.component(DrawerLayout.name, DrawerLayout)
 ```
 
-### Globals (script tag)
+## API
 
-Add a script tag pointing to `dist/vue-drawer-layout.js` *after* adding Vue.
+### props
 
-Example:
+| 参数 | 说明 | 类型 | 默认值 | 可选值 |
+|-----------|-----------|-----------|-------------|-------------|
+| width | 抽屉宽度 | `Number` | `body宽度的80%` |  |
+| enable | 抽屉是否可用 | `Boolean` | - |
 
-```html
-<html>
-<head>
-  ...
-</head>
-<body>
-  <div id="app">
-    <vue-drawer-layout></vue-drawer-layout>
-  </div>
+### slots
 
-  <script src="path/to/vue.js"></script>
-  <script src="path/to/vue-drawer-layout.js"></script>
-  <script>
-    new Vue({
-      el: '#app'
-    })
-    Vue.use(DrawerLayout)
-  </script>
-</body>
-</html>
-```
+| 参数 | 说明 | 
+|-----------|-----------|
+| drawer | 抽屉内嵌内容 |
+| content | 主体区内容 |
+
+### events
+
+| 事件名 | 说明 | 参数 |
+|-----------|-----------|-----------|
+| slide-start | drawer拖拽滑动开始的事件 | `pos(当前位置)` |
+| slide-move | drawer拖拽滑动中的事件 | `pos(当前位置)` |
+| slide-end | drawer拖拽滑动结束的事件 | `pos(当前位置),visible(开启关闭状态)` |
+| mask-click | 蒙层点击的事件 | - |
 
 ## License
 vue-drawer-layout is open source and released under the [MIT License](LICENSE).

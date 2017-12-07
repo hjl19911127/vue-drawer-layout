@@ -45,7 +45,10 @@
     export default {
         name: 'vue-drawer-layout',
         props: {
-            width: Number,
+            width: {
+                type: Number,
+                default: Math.floor(document.body.clientWidth * 0.8)
+            },
             action: Object,
             enable: Boolean,
             container: Object
@@ -125,6 +128,7 @@
                 }
                 if (!this.moving) this.willChange = false;
                 isTouching = undefined;
+                this.$emit('slide-end', pos, this.visible);
                 container.removeEventListener(mouseEvents.move, drag, supportsPassive ? {passive: true} : false);
                 container.removeEventListener(mouseEvents.up, removeDrag, supportsPassive ? {passive: true} : false);
             }.bind(this);

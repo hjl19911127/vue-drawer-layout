@@ -48,7 +48,10 @@ var DrawerLayout = { render: function render() {
     }, staticRenderFns: [], _scopeId: 'data-v-7e696ca1',
     name: 'vue-drawer-layout',
     props: {
-        width: Number,
+        width: {
+            type: Number,
+            default: Math.floor(document.body.clientWidth * 0.8)
+        },
         action: Object,
         enable: Boolean,
         container: Object
@@ -127,11 +130,11 @@ var DrawerLayout = { render: function render() {
         var removeDrag = function (e) {
             if (isTouching !== undefined) {
                 if (!isTouching) {
-                    var pos = this.pos;
+                    var _pos = this.pos;
                     if (speed > 0) {
-                        this.visible = (maxWidth - pos) / speed < duration || pos > maxWidth * 3 / 5;
+                        this.visible = (maxWidth - _pos) / speed < duration || _pos > maxWidth * 3 / 5;
                     } else {
-                        this.visible = !((0 - pos) / speed < duration || pos < maxWidth * 3 / 5);
+                        this.visible = !((0 - _pos) / speed < duration || _pos < maxWidth * 3 / 5);
                     }
                     if (this.pos > 0 && this.pos < maxWidth) this.moving = true;
                     this.pos = this.visible ? maxWidth : 0;
@@ -141,6 +144,7 @@ var DrawerLayout = { render: function render() {
             }
             if (!this.moving) this.willChange = false;
             isTouching = undefined;
+            this.$emit('slide-end', pos, this.visible);
             container.removeEventListener(mouseEvents.move, drag, supportsPassive ? { passive: true } : false);
             container.removeEventListener(mouseEvents.up, removeDrag, supportsPassive ? { passive: true } : false);
         }.bind(this);
