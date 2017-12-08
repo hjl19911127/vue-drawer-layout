@@ -36,14 +36,33 @@ import {DrawerLayout} from 'vue-drawer-layout'
 Vue.component(DrawerLayout.name, DrawerLayout)
 ```
 
+```html
+<vue-drawer-layout
+      ref="menu"
+      :width="width"
+      :action="sideMenuAction"
+      :enable="sideMenuEnable"
+      @slide-start="handleSlideStart"
+      @slide-move="handleSlideMove"
+      @slide-end="handleSlideEnd"
+      @mask-click="handleMaskClick">
+          <div class="menu-content" slot="drawer">
+            <!--drawer-content （左侧滑动内容区）-->
+          </div>
+          <div slot="content">
+            <!--main-content （主内容区）-->
+          </div>
+</vue-drawer-layout>
+```
 ## API
 
 ### props
 
 | 参数 | 说明 | 类型 | 默认值 | 可选值 |
-|-----------|-----------|-----------|-------------|-------------|
+|-----------|-----------|-----------|-------------|--------------|
 | width | 抽屉宽度 | `Number` | `body宽度的80%` |  |
 | enable | 抽屉是否可用 | `Boolean` | - |
+| action | 动作 | `Object` | - | `{visible: boolean}` |
 
 ### slots
 
