@@ -51,6 +51,7 @@
             },
             action: Object,
             enable: Boolean,
+            animate: Boolean,
             container: Object
         },
         data() {
@@ -72,6 +73,12 @@
                 this.visible = v.visible;
                 this.pos = v.visible ? this.width : 0;
                 this.moving = true
+            },
+            'moving'() {
+                if (!this.animate) this.moving = false;
+            },
+            'willChange'() {
+                if (!this.animate) this.willChange = false;
             }
         },
         computed: {

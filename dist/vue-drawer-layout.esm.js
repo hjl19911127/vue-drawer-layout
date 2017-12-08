@@ -48,6 +48,7 @@ var DrawerLayout = { render: function render() {
         },
         action: Object,
         enable: Boolean,
+        animate: Boolean,
         container: Object
     },
     data: function data() {
@@ -70,6 +71,12 @@ var DrawerLayout = { render: function render() {
             this.visible = v.visible;
             this.pos = v.visible ? this.width : 0;
             this.moving = true;
+        },
+        'moving': function moving() {
+            if (!this.animate) this.moving = false;
+        },
+        'willChange': function willChange() {
+            if (!this.animate) this.willChange = false;
         }
     },
     computed: {
