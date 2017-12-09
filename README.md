@@ -41,44 +41,46 @@ Vue.component(DrawerLayout.name, DrawerLayout)
       ref="menu"
       :width="width"
       :action="sideMenuAction"
+      :animate="true"
       :enable="sideMenuEnable"
       @slide-start="handleSlideStart"
       @slide-move="handleSlideMove"
       @slide-end="handleSlideEnd"
       @mask-click="handleMaskClick">
-          <div class="menu-content" slot="drawer">
-            <!--drawer-content （左侧滑动内容区）-->
+          <div class="drawer-content" slot="drawer">
+            <!-- drawer-content -->
           </div>
           <div slot="content">
-            <!--main-content （主内容区）-->
+            <!-- main-content -->
           </div>
 </vue-drawer-layout>
 ```
 ## API
 
-### props
+### Props
 
-| 参数 | 说明 | 类型 | 默认值 | 可选值 |
+| Name | Info | Type | Default | Values |
 |-----------|-----------|-----------|-------------|--------------|
-| width | 抽屉宽度 | `Number` | `body宽度的80%` |  |
-| enable | 抽屉是否可用 | `Boolean` | - |
-| action | 动作 | `Object` | - | `{visible: boolean}` |
+| width | width of drawer | `Number` | `80% of the document.body.clientWidth` |  |
+| enable | is drawer enable | `Boolean` | - |
+| animate | is drawer animate during moving | `Boolean` | - |
+| action | set drawer visible or not | `Object` | - | `{visible: boolean}` |
 
-### slots
+### Slots
 
-| 参数 | 说明 | 
+| Name | Info | 
 |-----------|-----------|
-| drawer | 抽屉内嵌内容 |
-| content | 主体区内容 |
+| drawer | content in drawer-content |
+| content | content in main-content |
 
-### events
+### Events
 
-| 事件名 | 说明 | 参数 |
+| Name | Info | arguments |
 |-----------|-----------|-----------|
-| slide-start | drawer拖拽滑动开始的事件 | `pos(当前位置)` |
-| slide-move | drawer拖拽滑动中的事件 | `pos(当前位置)` |
-| slide-end | drawer拖拽滑动结束的事件 | `pos(当前位置),visible(开启关闭状态)` |
-| mask-click | 蒙层点击的事件 | - |
+| slide-start | event of drawer start to slide (touchdown) | `pos(int)` |
+| slide-move | event of drawer sliding (touchmove) | `pos(int)` |
+| slide-end | event of drawer sliding (touchend) | `pos(int),visible(boolean)` |
+| mask-click | event of mask click | - |
 
 ## License
 vue-drawer-layout is open source and released under the [MIT License](LICENSE).
