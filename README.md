@@ -40,8 +40,8 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 <vue-drawer-layout
       ref="menu"
       :width="width"
-      :action="sideMenuAction"
       :animate="true"
+      :action="sideMenuAction"
       :enable="sideMenuEnable"
       @slide-start="handleSlideStart"
       @slide-move="handleSlideMove"
