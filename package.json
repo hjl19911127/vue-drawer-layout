@@ -1,6 +1,6 @@
 {
   "name": "vue-drawer-layout",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A simple drawer layout component like Android has for Vue.js",
   "main": "dist/vue-drawer-layout.js",
   "module": "dist/vue-drawer-layout.esm.js",
