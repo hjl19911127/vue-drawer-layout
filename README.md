@@ -39,10 +39,10 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 ```html
 <vue-drawer-layout
       ref="menu"
-      :width="width"
+      :width="800"
       :animate="true"
-      :action="sideMenuAction"
-      :enable="sideMenuEnable"
+      :action="{}"
+      :enable="true"
       @slide-start="handleSlideStart"
       @slide-move="handleSlideMove"
       @slide-end="handleSlideEnd"
@@ -61,7 +61,7 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 
 | Name | Info | Type | Default | Values |
 |-----------|-----------|-----------|-------------|--------------|
-| width | width of drawer | `Number` | `80% of the document.body.clientWidth` |  |
+| width | width of drawer(px) | `Number` | 80% of the document.body.clientWidth |  |
 | enable | is drawer enable | `Boolean` | - |
 | animate | is drawer animate during moving | `Boolean` | - |
 | action | set drawer visible or not | `Object` | - | `{visible: boolean}` |
