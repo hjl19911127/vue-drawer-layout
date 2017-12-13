@@ -78,7 +78,7 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 
 | Name | Info | arguments |
 |-----------|-----------|-----------|
-| slide-start | event of drawer start to slide (touchdown) | `pos(int)` |
+| slide-start | event of drawer start to slide (touchdown) | - |
 | slide-move | event of drawer sliding (touchmove) | `pos(int)` |
 | slide-end | event of drawer sliding (touchend) | `pos(int),visible(boolean)` |
 | mask-click | event of mask click | - |

@@ -1,17 +1,19 @@
 <template>
     <div class="drawer-layout">
         <div class="drawer-wrap" :class="{'moving':moving,'will-change':willChange}"
-             :style="{width:`${width}px`,left:`-${Math.ceil(width/3)}px`,transform:`translate3d(${Math.ceil(pos/3)}px,0,0)`}">
+             :style="{zIndex:zIndex,width:`${drawerWidth}px`,left:`-${Math.ceil(drawerWidth/3)}px`,transform:`translate3d(${Math.ceil(pos/3)}px,0,0)`}">
             <slot name="drawer"></slot>
         </div>
         <div class="content-wrap" :class="{'moving':moving,'will-change':willChange}"
              :style="{transform:`translate3d(${pos}px,0,0)`}">
-            <div class="drawer-mask" @click="handleMaskClick" :style="{'opacity':opacity}" v-show="pos"></div>
+            <div class="drawer-mask" @click="handleMaskClick" :style="{'opacity':opacity}"
+                 v-show="backdrop && pos"></div>
             <slot name="content"></slot>
         </div>
     </div>
 </template>
 <script>
+    const defaultWidth = Math.floor(document.body.clientWidth * 0.8);
     const supportsPassive = (() => {
         let supportsPassive = false;
         try {
@@ -45,14 +47,50 @@
     export default {
         name: 'vue-drawer-layout',
         props: {
-            width: {
+            drawerWidth: {
                 type: Number,
-                default: Math.floor(document.body.clientWidth * 0.8)
+                default: defaultWidth
             },
-            action: Object,
-            enable: Boolean,
-            animate: Boolean,
-            container: Object
+            zIndex: {
+                type: Number,
+                default: 10
+            },
+            drawerStartPosition: {
+                type: Number,
+                default: 0
+            },
+            backdrop: {
+                type: Boolean,
+                default: true
+            },
+            backdropMinOpacity: {
+                type: Number,
+                default: 0,
+                validator: function (value) {
+                    return value >= 0 && value <= 1
+                }
+            },
+            backdropMaxOpacity: {
+                type: Number,
+                default: 0.4,
+                validator: function (value) {
+                    return value >= 0 && value <= 1
+                }
+            },
+            enable: {
+                type: Boolean,
+                default: true
+            },
+            animate: {
+                type: Boolean,
+                default: true
+            },
+            container: {
+                type: Object,
+                default: function () {
+                    return window.document
+                }
+            },
         },
         data() {
             return {
@@ -63,17 +101,18 @@
             }
         },
         methods: {
+            toggle(visible) {
+                if (visible === undefined) visible = !this.visible;
+                this.visible = visible;
+                this.pos = visible ? this.drawerWidth : 0;
+                this.moving = true
+            },
             handleMaskClick() {
                 if (this.moving) return;
                 this.$emit('mask-click')
             }
         },
         watch: {
-            'action'(v) {
-                this.visible = v.visible;
-                this.pos = v.visible ? this.width : 0;
-                this.moving = true
-            },
             'moving'() {
                 if (!this.animate) this.moving = false;
             },
@@ -83,11 +122,11 @@
         },
         computed: {
             opacity() {
-                return this.pos * 0.4 / this.width || 0
+                return this.backdropMinOpacity * this.backdropMaxOpacity * (this.pos / this.drawerWidth) || 0
             }
         },
         mounted() {
-            const container = document, maxWidth = this.width;
+            const {container, drawerWidth} = this;
             let t1, t2, speed, startX, startY, nowX, nowY, lastX, startPos, isTouching;
             const initDrag = function (e) {
                 if (!this.enable) return;
@@ -99,7 +138,7 @@
                 startPos = this.pos;
                 container.addEventListener(mouseEvents.move, drag, supportsPassive ? {passive: true} : false);
                 container.addEventListener(mouseEvents.up, removeDrag, supportsPassive ? {passive: true} : false);
-                this.$emit('slide-start', this.pos)
+                this.$emit('slide-start')
             }.bind(this);
             const drag = function (e) {
                 t1 = t2;
@@ -109,7 +148,7 @@
                 nowY = e.clientY || e.changedTouches[0].clientY;
                 speed = (nowX - lastX) / (t2 - t1);
                 let pos = startPos + nowX - startX;
-                pos = Math.min(maxWidth, pos);
+                pos = Math.min(drawerWidth, pos);
                 pos = Math.max(0, pos);
                 if (isTouching === undefined) isTouching = Math.abs(nowY - startY) / Math.abs(nowX - startX) > (Math.sqrt(3) / 3);
                 if (!isTouching) {
@@ -123,27 +162,30 @@
                     if (!isTouching) {
                         let pos = this.pos;
                         if (speed > 0) {
-                            this.visible = (maxWidth - pos) / speed < duration || pos > maxWidth * 3 / 5
+                            this.visible = (drawerWidth - pos) / speed < duration || pos > drawerWidth * 3 / 5
                         } else {
-                            this.visible = !((0 - pos) / speed < duration || pos < maxWidth * 3 / 5)
+                            this.visible = !((0 - pos) / speed < duration || pos < drawerWidth * 3 / 5)
                         }
-                        if (this.pos > 0 && this.pos < maxWidth) this.moving = true;
-                        this.pos = this.visible ? maxWidth : 0;
-                    } else {
-                        this.pos = this.visible ? maxWidth : 0;
+                        if (this.pos > 0 && this.pos < drawerWidth) this.moving = true;
                     }
+                    this.pos = this.visible ? drawerWidth : 0;
                 }
-                if (!this.moving) this.willChange = false;
+                if (!this.moving) {
+                    this.willChange = false;
+                    this.$emit('slide-end', this.pos);
+                }
                 isTouching = undefined;
-                this.$emit('slide-end', this.pos, this.visible);
                 container.removeEventListener(mouseEvents.move, drag, supportsPassive ? {passive: true} : false);
                 container.removeEventListener(mouseEvents.up, removeDrag, supportsPassive ? {passive: true} : false);
             }.bind(this);
             'transitionend webkitTransitionEnd msTransitionEnd otransitionend oTransitionEnd'.split(' ').forEach((e) => {
                 this.$el.addEventListener(e, () => {
-                    this.moving = false;
-                    this.willChange = false;
-                    this.pos = this.visible ? maxWidth : 0;
+                    if (this.moving) {
+                        this.moving = false;
+                        this.willChange = false;
+                        this.pos = this.visible ? drawerWidth : 0;
+                        this.$emit('slide-end', this.pos, this.visible);
+                    }
                 }, false)
             });
             container.addEventListener(mouseEvents.down, initDrag, supportsPassive ? {passive: true} : false);

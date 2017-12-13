@@ -6,24 +6,55 @@ const rm = require("rimraf"),
     commonjs = require("rollup-plugin-commonjs");
 const pkg = require("../package");
 
-const inputOptions = {
-    input: "src/index.js",
-    plugins: [
-        nodeResolve({
-            jsnext: true,
-            main: true,
-            browser: true,
-            extensions: [".vue", ".js", ".json"]
-        }),
-        commonjs(),
-        vue({
-            css: true
-        }),
-        babel({
-            exclude: 'node_modules/**'
-        })
-    ]
-};
+const buildOptions = [
+    {
+        input: {
+            input: "src/index.js",
+            plugins: [
+                nodeResolve({
+                    jsnext: true,
+                    main: true,
+                    browser: true,
+                    extensions: [".vue", ".js", ".json"]
+                }),
+                commonjs(),
+                vue({
+                    css: true
+                })
+            ]
+        },
+        output: {
+            file: `./dist/${pkg.name}.esm.js`,
+            format: "es",
+            name: "DrawerLayout"
+        }
+    },
+    {
+        input: {
+            input: "src/index.js",
+            plugins: [
+                nodeResolve({
+                    jsnext: true,
+                    main: true,
+                    browser: true,
+                    extensions: [".vue", ".js", ".json"]
+                }),
+                commonjs(),
+                vue({
+                    css: true
+                }),
+                babel({
+                    exclude: 'node_modules/**'
+                })
+            ]
+        },
+        output: {
+            file: `./dist/${pkg.name}.js`,
+            format: "umd",
+            name: "DrawerLayout"
+        }
+    }
+];
 const outputOptions = [
     {
         file: `./dist/${pkg.name}.esm.js`,
@@ -39,9 +70,9 @@ const outputOptions = [
 
 function build() {
     rm('dist', () => {
-        outputOptions.forEach(async (outputOption) => {
-            const bundle = await rollup.rollup(inputOptions);
-            await bundle.write(outputOption);
+        buildOptions.forEach(async (o) => {
+            const bundle = await rollup.rollup(o.input);
+            await bundle.write(o.output);
         })
     })
 }
