@@ -38,10 +38,9 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 
 ```html
 <vue-drawer-layout
-      ref="menu"
+      ref="drawer"
       :width="800"
       :animate="true"
-      :action="{}"
       :enable="true"
       @slide-start="handleSlideStart"
       @slide-move="handleSlideMove"
@@ -64,7 +63,6 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 | width | width of drawer(px) | `Number` | 80% of the document.body.clientWidth |  |
 | enable | is drawer enable | `Boolean` | - |
 | animate | is drawer animate during moving | `Boolean` | - |
-| action | set drawer visible or not | `Object` | - | `{visible: boolean}` |
 
 ### Slots
 
@@ -72,6 +70,9 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 |-----------|-----------|
 | drawer | content in drawer-content |
 | content | content in main-content |
+### Methods
+
+
 
 ### Events
 

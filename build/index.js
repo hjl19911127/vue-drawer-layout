@@ -1,5 +1,4 @@
-const path = require("path"),
-    rm = require("rimraf"),
+const rm = require("rimraf"),
     rollup = require("rollup"),
     babel = require("rollup-plugin-babel"),
     nodeResolve = require("rollup-plugin-node-resolve"),
@@ -10,9 +9,6 @@ const pkg = require("../package");
 const inputOptions = {
     input: "src/index.js",
     plugins: [
-        vue({
-            css: true
-        }),
         nodeResolve({
             jsnext: true,
             main: true,
@@ -20,6 +16,9 @@ const inputOptions = {
             extensions: [".vue", ".js", ".json"]
         }),
         commonjs(),
+        vue({
+            css: true
+        }),
         babel({
             exclude: 'node_modules/**'
         })

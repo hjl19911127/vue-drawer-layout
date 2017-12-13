@@ -38,13 +38,13 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "rimraf": "^2.6.2",
-    "rollup": "^0.52.0",
+    "rollup": "^0.52.1",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-vue": "^3.0.0",
-    "vue": "^2.5.9",
-    "vue-template-compiler": "^2.5.9"
+    "vue": "^2.5.10",
+    "vue-template-compiler": "^2.5.10"
   },
   "engines": {
     "node": ">= 4.0.0",
