@@ -5,8 +5,8 @@
             <slot name="drawer"></slot>
         </div>
         <div class="content-wrap" :class="{'moving':moving,'will-change':willChange}"
-             :style="{transform:`translate3d(${pos}px,0,0)`}">
-            <div class="drawer-mask" @click="handleMaskClick" :style="{'opacity':opacity}"
+             :style="contentDrawable?{transform:`translate3d(${pos}px,0,0)`}:{}">
+            <div class="drawer-mask" @click="handleMaskClick" :style="{'opacity':backdropOpacity}"
                  v-show="backdrop && pos"></div>
             <slot name="content"></slot>
         </div>
@@ -51,28 +51,31 @@
                 type: Number,
                 default: defaultWidth
             },
+            drawerMoveDistance: {
+                type: Number,
+                default: defaultWidth
+            },
+            contentDrawable: {
+                type: Number,
+                default: defaultWidth
+            },
             zIndex: {
                 type: Number,
                 default: 10
             },
-            drawerStartPosition: {
+            dragStartPosition: {
                 type: Number,
-                default: 0
+                default: -defaultWidth
             },
             backdrop: {
                 type: Boolean,
                 default: true
             },
-            backdropMinOpacity: {
-                type: Number,
-                default: 0,
-                validator: function (value) {
-                    return value >= 0 && value <= 1
-                }
-            },
-            backdropMaxOpacity: {
-                type: Number,
-                default: 0.4,
+            backdropOpacityRange: {
+                type: Array,
+                default: function () {
+                    return [0, 0.4]
+                },
                 validator: function (value) {
                     return value >= 0 && value <= 1
                 }
@@ -121,8 +124,10 @@
             }
         },
         computed: {
-            opacity() {
-                return this.backdropMinOpacity * this.backdropMaxOpacity * (this.pos / this.drawerWidth) || 0
+            backdropOpacity() {
+                const {backdropOpacityRange, pos, drawerWidth} = this,
+                    [min, max] = backdropOpacityRange;
+                return min * max * (pos / drawerWidth) || 0
             }
         },
         mounted() {

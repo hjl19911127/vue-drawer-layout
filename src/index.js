@@ -5,7 +5,6 @@ const install = function (Vue, opts = {}) {
     Vue.component(DrawerLayout.name, DrawerLayout);
 };
 module.exports = {
-    version: '0.1.0',
     DrawerLayout,
     install
 };

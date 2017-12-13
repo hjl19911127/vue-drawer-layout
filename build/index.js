@@ -20,6 +20,9 @@ const buildOptions = [
                 commonjs(),
                 vue({
                     css: true
+                }),
+                babel({
+                    exclude: 'node_modules/**'
                 })
             ]
         },
@@ -53,18 +56,6 @@ const buildOptions = [
             format: "umd",
             name: "DrawerLayout"
         }
-    }
-];
-const outputOptions = [
-    {
-        file: `./dist/${pkg.name}.esm.js`,
-        format: "es",
-        name: "DrawerLayout"
-    },
-    {
-        file: `./dist/${pkg.name}.js`,
-        format: "umd",
-        name: "DrawerLayout"
     }
 ];
 

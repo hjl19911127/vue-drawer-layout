@@ -1,3 +1,41 @@
+var slicedToArray = function () {
+  function sliceIterator(arr, i) {
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"]) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  return function (arr, i) {
+    if (Array.isArray(arr)) {
+      return arr;
+    } else if (Symbol.iterator in Object(arr)) {
+      return sliceIterator(arr, i);
+    } else {
+      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    }
+  };
+}();
+
 (function () {
     if (typeof document !== 'undefined') {
         var head = document.head || document.getElementsByTagName('head')[0],
@@ -10,11 +48,12 @@
     }
 })();
 
+var defaultWidth = Math.floor(document.body.clientWidth * 0.8);
 var supportsPassive = function () {
     var supportsPassive = false;
     try {
         var opts = Object.defineProperty({}, 'passive', {
-            get: function get() {
+            get: function get$$1() {
                 supportsPassive = true;
             }
         });
@@ -38,18 +77,57 @@ var mouseEvents = isTouch ? {
     out: 'mouseout'
 };
 var DrawerLayout = { render: function render() {
-        var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "drawer-layout" }, [_c('div', { staticClass: "drawer-wrap", class: { 'moving': _vm.moving, 'will-change': _vm.willChange }, style: { width: _vm.width + 'px', left: '-' + Math.ceil(_vm.width / 3) + 'px', transform: 'translate3d(' + Math.ceil(_vm.pos / 3) + 'px,0,0)' } }, [_vm._t("drawer")], 2), _vm._v(" "), _c('div', { staticClass: "content-wrap", class: { 'moving': _vm.moving, 'will-change': _vm.willChange }, style: { transform: 'translate3d(' + _vm.pos + 'px,0,0)' } }, [_c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.pos, expression: "pos" }], staticClass: "drawer-mask", style: { 'opacity': _vm.opacity }, on: { "click": _vm.handleMaskClick } }), _vm._v(" "), _vm._t("content")], 2)]);
+        var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "drawer-layout" }, [_c('div', { staticClass: "drawer-wrap", class: { 'moving': _vm.moving, 'will-change': _vm.willChange }, style: { zIndex: _vm.zIndex, width: _vm.drawerWidth + 'px', left: '-' + Math.ceil(_vm.drawerWidth / 3) + 'px', transform: 'translate3d(' + Math.ceil(_vm.pos / 3) + 'px,0,0)' } }, [_vm._t("drawer")], 2), _vm._v(" "), _c('div', { staticClass: "content-wrap", class: { 'moving': _vm.moving, 'will-change': _vm.willChange }, style: _vm.contentDrawable ? { transform: 'translate3d(' + _vm.pos + 'px,0,0)' } : {} }, [_c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.backdrop && _vm.pos, expression: "backdrop && pos" }], staticClass: "drawer-mask", style: { 'opacity': _vm.backdropOpacity }, on: { "click": _vm.handleMaskClick } }), _vm._v(" "), _vm._t("content")], 2)]);
     }, staticRenderFns: [], _scopeId: 'data-v-7e696ca1',
     name: 'vue-drawer-layout',
     props: {
-        width: {
+        drawerWidth: {
             type: Number,
-            default: Math.floor(document.body.clientWidth * 0.8)
+            default: defaultWidth
         },
-        action: Object,
-        enable: Boolean,
-        animate: Boolean,
-        container: Object
+        drawerMoveDistance: {
+            type: Number,
+            default: defaultWidth
+        },
+        contentDrawable: {
+            type: Number,
+            default: defaultWidth
+        },
+        zIndex: {
+            type: Number,
+            default: 10
+        },
+        dragStartPosition: {
+            type: Number,
+            default: -defaultWidth
+        },
+        backdrop: {
+            type: Boolean,
+            default: true
+        },
+        backdropOpacityRange: {
+            type: Array,
+            default: function _default() {
+                return [0, 0.4];
+            },
+            validator: function validator(value) {
+                return value >= 0 && value <= 1;
+            }
+        },
+        enable: {
+            type: Boolean,
+            default: true
+        },
+        animate: {
+            type: Boolean,
+            default: true
+        },
+        container: {
+            type: Object,
+            default: function _default() {
+                return window.document;
+            }
+        }
     },
     data: function data() {
         return {
@@ -61,17 +139,18 @@ var DrawerLayout = { render: function render() {
     },
 
     methods: {
+        toggle: function toggle(visible) {
+            if (visible === undefined) visible = !this.visible;
+            this.visible = visible;
+            this.pos = visible ? this.drawerWidth : 0;
+            this.moving = true;
+        },
         handleMaskClick: function handleMaskClick() {
             if (this.moving) return;
             this.$emit('mask-click');
         }
     },
     watch: {
-        'action': function action(v) {
-            this.visible = v.visible;
-            this.pos = v.visible ? this.width : 0;
-            this.moving = true;
-        },
         'moving': function moving() {
             if (!this.animate) this.moving = false;
         },
@@ -80,15 +159,23 @@ var DrawerLayout = { render: function render() {
         }
     },
     computed: {
-        opacity: function opacity() {
-            return this.pos * 0.4 / this.width || 0;
+        backdropOpacity: function backdropOpacity() {
+            var backdropOpacityRange = this.backdropOpacityRange,
+                pos = this.pos,
+                drawerWidth = this.drawerWidth,
+                _backdropOpacityRange = slicedToArray(backdropOpacityRange, 2),
+                min = _backdropOpacityRange[0],
+                max = _backdropOpacityRange[1];
+
+            return min * max * (pos / drawerWidth) || 0;
         }
     },
     mounted: function mounted() {
         var _this = this;
 
-        var container = document,
-            maxWidth = this.width;
+        var container = this.container,
+            drawerWidth = this.drawerWidth;
+
         var t1 = void 0,
             t2 = void 0,
             speed = void 0,
@@ -109,7 +196,7 @@ var DrawerLayout = { render: function render() {
             startPos = this.pos;
             container.addEventListener(mouseEvents.move, drag, supportsPassive ? { passive: true } : false);
             container.addEventListener(mouseEvents.up, removeDrag, supportsPassive ? { passive: true } : false);
-            this.$emit('slide-start', this.pos);
+            this.$emit('slide-start');
         }.bind(this);
         var drag = function (e) {
             t1 = t2;
@@ -119,7 +206,7 @@ var DrawerLayout = { render: function render() {
             nowY = e.clientY || e.changedTouches[0].clientY;
             speed = (nowX - lastX) / (t2 - t1);
             var pos = startPos + nowX - startX;
-            pos = Math.min(maxWidth, pos);
+            pos = Math.min(drawerWidth, pos);
             pos = Math.max(0, pos);
             if (isTouching === undefined) isTouching = Math.abs(nowY - startY) / Math.abs(nowX - startX) > Math.sqrt(3) / 3;
             if (!isTouching) {
@@ -133,27 +220,30 @@ var DrawerLayout = { render: function render() {
                 if (!isTouching) {
                     var pos = this.pos;
                     if (speed > 0) {
-                        this.visible = (maxWidth - pos) / speed < duration || pos > maxWidth * 3 / 5;
+                        this.visible = (drawerWidth - pos) / speed < duration || pos > drawerWidth * 3 / 5;
                     } else {
-                        this.visible = !((0 - pos) / speed < duration || pos < maxWidth * 3 / 5);
+                        this.visible = !((0 - pos) / speed < duration || pos < drawerWidth * 3 / 5);
                     }
-                    if (this.pos > 0 && this.pos < maxWidth) this.moving = true;
-                    this.pos = this.visible ? maxWidth : 0;
-                } else {
-                    this.pos = this.visible ? maxWidth : 0;
+                    if (this.pos > 0 && this.pos < drawerWidth) this.moving = true;
                 }
+                this.pos = this.visible ? drawerWidth : 0;
             }
-            if (!this.moving) this.willChange = false;
+            if (!this.moving) {
+                this.willChange = false;
+                this.$emit('slide-end', this.pos);
+            }
             isTouching = undefined;
-            this.$emit('slide-end', this.pos, this.visible);
             container.removeEventListener(mouseEvents.move, drag, supportsPassive ? { passive: true } : false);
             container.removeEventListener(mouseEvents.up, removeDrag, supportsPassive ? { passive: true } : false);
         }.bind(this);
         'transitionend webkitTransitionEnd msTransitionEnd otransitionend oTransitionEnd'.split(' ').forEach(function (e) {
             _this.$el.addEventListener(e, function () {
-                _this.moving = false;
-                _this.willChange = false;
-                _this.pos = _this.visible ? maxWidth : 0;
+                if (_this.moving) {
+                    _this.moving = false;
+                    _this.willChange = false;
+                    _this.pos = _this.visible ? drawerWidth : 0;
+                    _this.$emit('slide-end', _this.pos, _this.visible);
+                }
             }, false);
         });
         container.addEventListener(mouseEvents.down, initDrag, supportsPassive ? { passive: true } : false);
@@ -165,7 +255,6 @@ var install = function install(Vue) {
     Vue.component(DrawerLayout.name, DrawerLayout);
 };
 module.exports = {
-    version: '0.1.0',
     DrawerLayout: DrawerLayout,
     install: install
 };
