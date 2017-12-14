@@ -1,7 +1,7 @@
 # vue-drawer-layout
 A simple drawer layout component like Android has for [Vue.js](http://vuejs.org)
 
-[中文文档](README.zh-CN.md)
+[English Document](README.md)
 
 ## Demo
 [Mobile QQ by Alexander Huang](http://chat.codehuang.com/message)
