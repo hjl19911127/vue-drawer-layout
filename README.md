@@ -82,7 +82,7 @@ Or you can set every prop as you want to get a fantastic drawer like mobile QQ h
 |-----------|-----------|-----------|-------------|
 | width | width of drawer(px) | `Number` | 80% of the body width |
 | drawable-distance | farthest distance to draw(px) | `Number` | same as `width` prop |
-| z-index | z-index of drawer | `Number` | `818` |
+| z-index | z-index of drawer | `Number` | `818`(Don't Ask) |
 | content-drawable | whether to make content-wrapper drawable | `Boolean` | `false` |
 | backdrop | whether to show backdrop | `Boolean` | `true` |
 | backdrop-opacity-range | the opacity range of backdrop[min,max] | `Array` | `[0,0.4]` |
