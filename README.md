@@ -35,7 +35,7 @@ Vue.use(DrawerLayout)
 import {DrawerLayout} from 'vue-drawer-layout'
 Vue.component(DrawerLayout.name, DrawerLayout)
 ```
-You can easily just set nothing or only`width` prop to get a simple drawer.
+You can easily just set nothing or only`width` prop to get a simple drawer.It act above the main content.
 ```html
 <vue-drawer-layout
       ref="drawer"
@@ -48,7 +48,7 @@ You can easily just set nothing or only`width` prop to get a simple drawer.
           </div>
 </vue-drawer-layout>
 ```
-Or you can set every prop as you want to get a fantastic drawer like mobile QQ has.
+Or you can set every prop as you want to get a fantastic drawer like mobile QQ has(It act below the main content and with distance is 1/3 of the main content drag).
 
 ```html
 <vue-drawer-layout

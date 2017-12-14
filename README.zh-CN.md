@@ -34,7 +34,7 @@ Vue.use(DrawerLayout)
 import {DrawerLayout} from 'vue-drawer-layout'
 Vue.component(DrawerLayout.name, DrawerLayout)
 ```
-你可以什么属性也不传，或者只设一个width就能得到一个简单的drawer
+你可以什么属性也不传，或者只设一个width就能得到一个简单的drawer（像Android原生的drawerLayout那样drawer在上面）
 ```html
 <vue-drawer-layout
       ref="drawer"
@@ -47,7 +47,7 @@ Vue.component(DrawerLayout.name, DrawerLayout)
           </div>
 </vue-drawer-layout>
 ```
-或者你可以设置所有属性来得到一个更惊艳的drawer，想移动QQ那样
+或者你可以设置所有属性来得到一个更惊艳的drawer，想移动QQ那样（drawer从主容器下方出现，且移动的距离只有总宽度的1/3）
 
 ```html
 <vue-drawer-layout
@@ -81,7 +81,7 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 |-----------|-----------|-----------|-------------|
 | width | drawer的宽度(px) | `Number` | body宽度的80% |
 | drawable-distance | drawer可拖拽的最大距离(px) | `Number` | 与`width` 属性一样 |
-| z-index | drawer的z-index | `Number` | `818` |
+| z-index | drawer的z-index | `Number` | `818`（不要问我为什么是这个数^-^） |
 | content-drawable | 主容器是否一起移动 | `Boolean` | `false` |
 | backdrop | 是否显示蒙层 | `Boolean` | `true` |
 | backdrop-opacity-range | 蒙层的透明度范围[min,max] | `Array` | `[0,0.4]` |
