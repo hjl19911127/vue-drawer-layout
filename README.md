@@ -16,8 +16,6 @@ Modern browsers and Internet Explorer 10+(due to CSS transition support).
 
 ## Installation
 
-### NPM
-
 ```bash
 npm install vue-drawer-layout --save
 ```
@@ -99,13 +97,13 @@ Or you can set every prop as you want to get a fantastic drawer like mobile QQ h
 
 ### Methods
 
-| Name | Info | arguments |
-|-----------|-----------|-----------|
-| toggle | method to show and hide drawer | `visible(Boolean)` or no args to toggle visible status |
+| Name | Info | Arguments | Usage |
+|-----------|-----------|-----------|-----------|
+| toggle | method to show and hide drawer | `visible(Boolean)` | `toggle(true/false)` or `toggle()`to toggle visible status
 
 ### Events
 
-| Name | Info | arguments |
+| Name | Info | Arguments |
 |-----------|-----------|-----------|
 | slide-start | drawer start to slide (touchdown) | - |
 | slide-move | drawer sliding (touchmove) | `pos(int)` |
