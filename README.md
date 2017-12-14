@@ -100,7 +100,7 @@ Or you can set every prop as you want to get a fantastic drawer like mobile QQ h
 
 | Name | Info | Arguments | Usage |
 |-----------|-----------|-----------|-----------|
-| toggle | method to show and hide drawer | `visible(Boolean)` | `toggle(true/false)` or `toggle()`to toggle visible status |
+| toggle | method to show and hide drawer | `visible(Boolean)` | `toggle(true/false)` or `toggle()`to show(hide) |
 
 ### Events
 

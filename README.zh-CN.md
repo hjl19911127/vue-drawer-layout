@@ -34,7 +34,7 @@ Vue.use(DrawerLayout)
 import {DrawerLayout} from 'vue-drawer-layout'
 Vue.component(DrawerLayout.name, DrawerLayout)
 ```
-你可以很简单的什么属性也不传，或者只设一个width就能得到一个简单的drawer
+你可以什么属性也不传，或者只设一个width就能得到一个简单的drawer
 ```html
 <vue-drawer-layout
       ref="drawer"
