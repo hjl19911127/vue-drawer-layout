@@ -81,7 +81,7 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 |-----------|-----------|-----------|-------------|
 | width | drawer的宽度(px) | `Number` | body宽度的80% |
 | drawable-distance | drawer可拖拽的最大距离(px) | `Number` | 与`width` 属性一样 |
-| z-index | drawer的z-index | `Number` | `818`（不要问我为什么是这个数^-^） |
+| z-index | drawer的z-index | `Number` | `818`（不要问我为什么^-^） |
 | content-drawable | 主容器是否一起移动 | `Boolean` | `false` |
 | backdrop | 是否显示蒙层 | `Boolean` | `true` |
 | backdrop-opacity-range | 蒙层的透明度范围[min,max] | `Array` | `[0,0.4]` |
