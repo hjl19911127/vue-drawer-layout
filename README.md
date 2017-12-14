@@ -103,11 +103,11 @@ Or you can set every prop as you want to get a fantastic drawer like mobile QQ h
 
 ### Events
 
-| Name | Info | Arguments |
+| Name | Info | Callback Arguments |
 |-----------|-----------|-----------|
 | slide-start | drawer start to slide (touchdown) | - |
 | slide-move | drawer sliding (touchmove) | `pos(int)` |
-| slide-end | drawer sliding (touchend) | `pos(int), visible(boolean)` |
+| slide-end | drawer sliding (touchend) | `visible(boolean)` |
 | mask-click | touch(click) on mask  | - |
 
 ## License

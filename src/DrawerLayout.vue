@@ -172,7 +172,7 @@
                 }
                 if (!this.moving) {
                     this.willChange = false;
-                    this.$emit('slide-end', this.pos);
+                    this.$emit('slide-end', this.visible);
                 }
                 isTouching = undefined;
                 container.removeEventListener(mouseEvents.move, drag, supportsPassive ? {passive: true} : false);
@@ -184,7 +184,7 @@
                         this.moving = false;
                         this.willChange = false;
                         this.pos = this.visible ? width : 0;
-                        this.$emit('slide-end', this.pos, this.visible);
+                        this.$emit('slide-end', this.visible);
                     }
                 }, false)
             });

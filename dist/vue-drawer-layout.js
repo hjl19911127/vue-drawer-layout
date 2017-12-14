@@ -97,7 +97,7 @@ var DrawerLayout = { render: function render() {
         },
         zIndex: {
             type: Number,
-            default: 10
+            default: 818
         },
         contentDrawable: {
             type: Boolean,
@@ -235,7 +235,7 @@ var DrawerLayout = { render: function render() {
             }
             if (!this.moving) {
                 this.willChange = false;
-                this.$emit('slide-end', this.pos);
+                this.$emit('slide-end', this.visible);
             }
             isTouching = undefined;
             container.removeEventListener(mouseEvents.move, drag, supportsPassive ? { passive: true } : false);
@@ -247,7 +247,7 @@ var DrawerLayout = { render: function render() {
                     _this.moving = false;
                     _this.willChange = false;
                     _this.pos = _this.visible ? width : 0;
-                    _this.$emit('slide-end', _this.pos, _this.visible);
+                    _this.$emit('slide-end', _this.visible);
                 }
             }, false);
         });
