@@ -1,30 +1,30 @@
 # vue-drawer-layout
-A simple drawer layout component like Android has for [Vue.js](http://vuejs.org)
+一个简单的drawerLayout（类似android的drawerLayout）布局组件，基于[Vue.js](http://vuejs.org)
 
-[English Document](README.md)
+[English Doc](README.md)
 
-## Demo
-[Mobile QQ by Alexander Huang](http://chat.codehuang.com/message)
+## 实例
+[自制的仿移动QQ（点我或扫下面的二维码）](http://chat.codehuang.com/message)
 
-Click the avatar at the top-left or touch(click) and drag to right.
+![试一试](assets/qrcode.png)
 
-## Requirements
+然后点击页面中左上角的头像打开drawer或者向右向左拖拽
+
+## 依赖
 * [Vue.js](http://vuejs.org) (2.x)
 
-## Browser Support
-Modern browsers and Internet Explorer 10+(due to CSS transition support).
+## 浏览器支持
+现代（移动）浏览器或IE10+（支持css transition api），X5内核也经过测试
 
-## Installation
+## 安装
 
 ```bash
 npm install vue-drawer-layout --save
 ```
 
-## Usage
+## 使用
 
-### ES6
-*The following examples can also be used with CommonJS by replacing ES6-specific syntax with CommonJS equivalents.*
-
+*下面的例子也可以使用CommonJS规范引入*
 ```js
 import Vue from 'vue'
 import DrawerLayout from 'vue-drawer-layout'
@@ -34,7 +34,7 @@ Vue.use(DrawerLayout)
 import {DrawerLayout} from 'vue-drawer-layout'
 Vue.component(DrawerLayout.name, DrawerLayout)
 ```
-You can easily just set nothing or only`width` prop to get a simple drawer.
+你可以很简单的什么属性也不传，或者只设一个width就能得到一个简单的drawer
 ```html
 <vue-drawer-layout
       ref="drawer"
@@ -47,7 +47,7 @@ You can easily just set nothing or only`width` prop to get a simple drawer.
           </div>
 </vue-drawer-layout>
 ```
-Or you can set every prop as you want to get a fantastic drawer like mobile QQ has.
+或者你可以设置所有属性来得到一个更惊艳的drawer，想移动QQ那样
 
 ```html
 <vue-drawer-layout
@@ -77,40 +77,40 @@ Or you can set every prop as you want to get a fantastic drawer like mobile QQ h
 
 ### Props
 
-| Name | Info | Type | Default | Values |
-|-----------|-----------|-----------|-------------|--------------|
-| width | width of drawer(px) | `Number` | 80% of the body width | - |
-| drawable-distance | farthest distance to draw(px) | `Number` | same as `width` prop | - |
-| z-index | z-index of drawer | `Number` | `818` |  |
-| content-drawable | z-index of drawer | `Boolean` | `false` | - |
-| backdrop | whether to show backdrop | `Boolean` | `true` | - |
-| backdrop-opacity-range | the opacity range of backdrop | `Array` | `[0,0.4]` | - |
-| enable | is drawer enable | `Boolean` | `true` | - |
-| animatable | is drawer animate during moving | `Boolean` | `true` |
+| 名称 | 介绍 | 类型 | 默认值 |
+|-----------|-----------|-----------|-------------|
+| width | drawer的宽度(px) | `Number` | body宽度的80% |
+| drawable-distance | drawer可拖拽的最大距离(px) | `Number` | 与`width` 属性一样 |
+| z-index | drawer的z-index | `Number` | `818` |
+| content-drawable | 主容器是否一起移动 | `Boolean` | `false` |
+| backdrop | 是否显示蒙层 | `Boolean` | `true` |
+| backdrop-opacity-range | 蒙层的透明度范围[min,max] | `Array` | `[0,0.4]` |
+| enable | 启用禁用drawer功能 | `Boolean` | `true` |
+| animatable | drawer移动过程是否有动画 | `Boolean` | `true` |
 
 ### Slots
 
-| Name | Info | 
+| 名称 | 介绍 | 
 |-----------|-----------|
-| drawer | content in drawer-content |
-| content | content in main-content |
+| drawer | drawer内嵌内容 |
+| content | 主容器内嵌内容 |
 
 ### Methods
 
-| Name | Info | Arguments | Usage |
+| 名称 | 介绍 | 参数 | 使用方式 |
 |-----------|-----------|-----------|-----------|
-| toggle | method to show and hide drawer | `visible(Boolean)` | `toggle(true/false)` or `toggle()`to toggle visible status
+| toggle | 显示或者隐藏drawer | `visible(Boolean)` | `toggle(true/false)` 或者 `toggle()`切换显示隐藏 |
 
 ### Events
 
-| Name | Info | Callback Arguments |
+| 名称 | 介绍 | 回调参数 |
 |-----------|-----------|-----------|
-| slide-start | drawer start to slide (touchdown) | - |
-| slide-move | drawer sliding (touchmove) | `pos(int)` |
-| slide-end | drawer sliding (touchend) | `visible(boolean)` |
-| mask-click | touch(click) on mask  | - |
+| slide-start | drawer开始拖拽前（touchstart 触发） | - |
+| slide-move | drawer拖拽中（touchmove 触发） | `pos(int)` |
+| slide-end | drawer拖拽结束（touchend 有动画则是transitionend事件之后触发） | `visible(boolean)` |
+| mask-click | 蒙层点击事件  | - |
 
-## License
-vue-drawer-layout is open source and released under the [MIT License](LICENSE).
+## 许可证
+[MIT License](LICENSE).
 
 Copyright (c) 2017 Alexander Huang.

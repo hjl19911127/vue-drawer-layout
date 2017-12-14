@@ -4,15 +4,17 @@ A simple drawer layout component like Android has for [Vue.js](http://vuejs.org)
 [中文文档](README.zh-CN.md)
 
 ## Demo
-[Mobile QQ by Alexander Huang](http://chat.codehuang.com/message)
+[Mobile QQ by Alexander Huang(click me or scan the qrcode)](http://chat.codehuang.com/message)
 
-Click the avatar at the top-left or touch(click) and drag to right.
+![Try it](assets/qrcode.png)
 
-## Requirements
+Click the avatar at the top-left or touch(click) and drag to right(left).
+
+## Dependencies
 * [Vue.js](http://vuejs.org) (2.x)
 
 ## Browser Support
-Modern browsers and Internet Explorer 10+(due to CSS transition support).
+Modern (mobile) browsers and Internet Explorer 10+(due to CSS transition support) and X5 core is supported.
 
 ## Installation
 
@@ -22,7 +24,6 @@ npm install vue-drawer-layout --save
 
 ## Usage
 
-### ES6
 *The following examples can also be used with CommonJS by replacing ES6-specific syntax with CommonJS equivalents.*
 
 ```js
@@ -77,15 +78,15 @@ Or you can set every prop as you want to get a fantastic drawer like mobile QQ h
 
 ### Props
 
-| Name | Info | Type | Default | Values |
-|-----------|-----------|-----------|-------------|--------------|
-| width | width of drawer(px) | `Number` | 80% of the body width | - |
-| drawable-distance | farthest distance to draw(px) | `Number` | same as `width` prop | - |
-| z-index | z-index of drawer | `Number` | `818` |  |
-| content-drawable | z-index of drawer | `Boolean` | `false` | - |
-| backdrop | whether to show backdrop | `Boolean` | `true` | - |
-| backdrop-opacity-range | the opacity range of backdrop | `Array` | `[0,0.4]` | - |
-| enable | is drawer enable | `Boolean` | `true` | - |
+| Name | Info | Type | Default |
+|-----------|-----------|-----------|-------------|
+| width | width of drawer(px) | `Number` | 80% of the body width |
+| drawable-distance | farthest distance to draw(px) | `Number` | same as `width` prop |
+| z-index | z-index of drawer | `Number` | `818` |
+| content-drawable | whether to make content-wrapper drawable | `Boolean` | `false` |
+| backdrop | whether to show backdrop | `Boolean` | `true` |
+| backdrop-opacity-range | the opacity range of backdrop[min,max] | `Array` | `[0,0.4]` |
+| enable | is drawer enable | `Boolean` | `true` |
 | animatable | is drawer animate during moving | `Boolean` | `true` |
 
 ### Slots
@@ -99,18 +100,18 @@ Or you can set every prop as you want to get a fantastic drawer like mobile QQ h
 
 | Name | Info | Arguments | Usage |
 |-----------|-----------|-----------|-----------|
-| toggle | method to show and hide drawer | `visible(Boolean)` | `toggle(true/false)` or `toggle()`to toggle visible status
+| toggle | method to show and hide drawer | `visible(Boolean)` | `toggle(true/false)` or `toggle()`to toggle visible status |
 
 ### Events
 
 | Name | Info | Callback Arguments |
 |-----------|-----------|-----------|
-| slide-start | drawer start to slide (touchdown) | - |
-| slide-move | drawer sliding (touchmove) | `pos(int)` |
-| slide-end | drawer sliding (touchend) | `visible(boolean)` |
+| slide-start | drawer start to slide (fired when touchdown) | - |
+| slide-move | drawer sliding (fired when touchmove) | `pos(int)` |
+| slide-end | drawer sliding (fired when touchend or transitionend) | `visible(boolean)` |
 | mask-click | touch(click) on mask  | - |
 
 ## License
-vue-drawer-layout is open source and released under the [MIT License](LICENSE).
+[MIT License](LICENSE).
 
 Copyright (c) 2017 Alexander Huang.
