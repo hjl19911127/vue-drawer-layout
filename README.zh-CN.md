@@ -10,6 +10,8 @@
 
 然后点击页面中左上角的头像打开drawer或者向右向左拖拽
 
+![演示](assets/demo.gif)
+
 ## 依赖
 * [Vue.js](http://vuejs.org) (2.x)
 

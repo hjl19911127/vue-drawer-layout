@@ -10,6 +10,8 @@ A simple drawer layout component like Android has for [Vue.js](http://vuejs.org)
 
 Click the avatar at the top-left or touch(click) and drag to right(left).
 
+![Demo](assets/demo.gif)
+
 ## Dependencies
 * [Vue.js](http://vuejs.org) (2.x)
 
