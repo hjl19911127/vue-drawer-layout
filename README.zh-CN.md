@@ -1,5 +1,7 @@
 # vue-drawer-layout
-一个简单的drawerLayout（类似android的drawerLayout）布局组件，基于[Vue.js](http://vuejs.org)
+[![npm](https://img.shields.io/npm/v/vue-drawer-layout.svg)](https://www.npmjs.org/package/vue-drawer-layout)
+[![npm](https://img.shields.io/npm/dt/vue-drawer-layout.svg)](https://www.npmjs.org/package/vue-drawer-layout)
+> 一个简单的drawerLayout（类似android的drawerLayout）布局组件，基于[Vue.js](http://vuejs.org)
 
 [English Doc](README.md)
 

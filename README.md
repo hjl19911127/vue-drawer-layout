@@ -1,5 +1,7 @@
 # vue-drawer-layout
-A simple drawer layout component like Android has for [Vue.js](http://vuejs.org)
+[![npm](https://img.shields.io/npm/v/vue-drawer-layout.svg)](https://www.npmjs.org/package/vue-drawer-layout)
+[![npm](https://img.shields.io/npm/dt/vue-drawer-layout.svg)](https://www.npmjs.org/package/vue-drawer-layout)
+> A simple drawer layout component like Android has for [Vue.js](http://vuejs.org)
 
 [中文文档](README.zh-CN.md)
 
