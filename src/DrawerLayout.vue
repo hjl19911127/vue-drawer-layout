@@ -1,7 +1,7 @@
 <template>
     <div class="drawer-layout">
         <div class="drawer-wrap" :class="{'moving':moving,'will-change':willChange}"
-             :style="{zIndex:zIndex,width:`${drawerWidth}px`,left:`-${Math.ceil(drawerWidth/3)}px`,transform:`translate3d(${Math.ceil(pos/3)}px,0,0)`}">
+             :style="{zIndex:zIndex,width:`${width}px`,left:`-${Math.ceil(width*moveRate)}px`,transform:`translate3d(${Math.ceil(pos*moveRate)}px,0,0)`}">
             <slot name="drawer"></slot>
         </div>
         <div class="content-wrap" :class="{'moving':moving,'will-change':willChange}"
@@ -47,25 +47,21 @@
     export default {
         name: 'vue-drawer-layout',
         props: {
-            drawerWidth: {
+            width: {
                 type: Number,
                 default: defaultWidth
             },
-            drawerMoveDistance: {
-                type: Number,
-                default: defaultWidth
-            },
-            contentDrawable: {
+            drawableDistance: {
                 type: Number,
                 default: defaultWidth
             },
             zIndex: {
                 type: Number,
-                default: 10
+                default: 818
             },
-            dragStartPosition: {
-                type: Number,
-                default: -defaultWidth
+            contentDrawable: {
+                type: Boolean,
+                default: false
             },
             backdrop: {
                 type: Boolean,
@@ -77,23 +73,18 @@
                     return [0, 0.4]
                 },
                 validator: function (value) {
-                    return value >= 0 && value <= 1
+                    let [min, max] = value;
+                    return min < max && min >= 0 && max <= 1
                 }
             },
             enable: {
                 type: Boolean,
                 default: true
             },
-            animate: {
+            animatable: {
                 type: Boolean,
                 default: true
-            },
-            container: {
-                type: Object,
-                default: function () {
-                    return window.document
-                }
-            },
+            }
         },
         data() {
             return {
@@ -107,7 +98,7 @@
             toggle(visible) {
                 if (visible === undefined) visible = !this.visible;
                 this.visible = visible;
-                this.pos = visible ? this.drawerWidth : 0;
+                this.pos = visible ? this.width : 0;
                 this.moving = true
             },
             handleMaskClick() {
@@ -117,21 +108,25 @@
         },
         watch: {
             'moving'() {
-                if (!this.animate) this.moving = false;
+                if (!this.animatable) this.moving = false;
             },
             'willChange'() {
-                if (!this.animate) this.willChange = false;
+                if (!this.animatable) this.willChange = false;
             }
         },
         computed: {
             backdropOpacity() {
-                const {backdropOpacityRange, pos, drawerWidth} = this,
+                const {backdropOpacityRange, pos, width} = this,
                     [min, max] = backdropOpacityRange;
-                return min * max * (pos / drawerWidth) || 0
+                return min + max * (pos / width) || 0
+            },
+            moveRate() {
+                const {width, drawableDistance} = this;
+                return drawableDistance / width
             }
         },
         mounted() {
-            const {container, drawerWidth} = this;
+            const {width} = this, container = window.document;
             let t1, t2, speed, startX, startY, nowX, nowY, lastX, startPos, isTouching;
             const initDrag = function (e) {
                 if (!this.enable) return;
@@ -153,7 +148,7 @@
                 nowY = e.clientY || e.changedTouches[0].clientY;
                 speed = (nowX - lastX) / (t2 - t1);
                 let pos = startPos + nowX - startX;
-                pos = Math.min(drawerWidth, pos);
+                pos = Math.min(width, pos);
                 pos = Math.max(0, pos);
                 if (isTouching === undefined) isTouching = Math.abs(nowY - startY) / Math.abs(nowX - startX) > (Math.sqrt(3) / 3);
                 if (!isTouching) {
@@ -167,13 +162,13 @@
                     if (!isTouching) {
                         let pos = this.pos;
                         if (speed > 0) {
-                            this.visible = (drawerWidth - pos) / speed < duration || pos > drawerWidth * 3 / 5
+                            this.visible = (width - pos) / speed < duration || pos > width * 3 / 5
                         } else {
-                            this.visible = !((0 - pos) / speed < duration || pos < drawerWidth * 3 / 5)
+                            this.visible = !((0 - pos) / speed < duration || pos < width * 3 / 5)
                         }
-                        if (this.pos > 0 && this.pos < drawerWidth) this.moving = true;
+                        if (this.pos > 0 && this.pos < width) this.moving = true;
                     }
-                    this.pos = this.visible ? drawerWidth : 0;
+                    this.pos = this.visible ? width : 0;
                 }
                 if (!this.moving) {
                     this.willChange = false;
@@ -188,7 +183,7 @@
                     if (this.moving) {
                         this.moving = false;
                         this.willChange = false;
-                        this.pos = this.visible ? drawerWidth : 0;
+                        this.pos = this.visible ? width : 0;
                         this.$emit('slide-end', this.pos, this.visible);
                     }
                 }, false)
@@ -229,7 +224,7 @@
         bottom: 0
         left: 0
         background-color: #000
-        z-index: 1000
+        z-index: 914
 
     .moving
         transition transform .3s ease
