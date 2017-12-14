@@ -4,7 +4,7 @@
 [English Doc](README.md)
 
 ## 实例
-[自制的仿移动QQ（点我或扫下面的二维码）](http://chat.codehuang.com/message)
+[自制的高仿移动QQ（点我或扫下面的二维码）](http://chat.codehuang.com/message)
 
 ![试一试](assets/qrcode.png)
 
