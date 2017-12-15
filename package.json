@@ -1,6 +1,6 @@
 {
   "name": "vue-drawer-layout",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A simple drawer layout component like Android has for Vue.js",
   "main": "dist/vue-drawer-layout.js",
   "files": [
@@ -41,6 +41,7 @@
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
     "rollup-plugin-vue": "^3.0.0",
     "vue": "^2.5.10",
     "vue-template-compiler": "^2.5.10"

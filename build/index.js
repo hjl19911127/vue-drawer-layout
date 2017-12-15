@@ -3,7 +3,8 @@ const rm = require("rimraf"),
     babel = require("rollup-plugin-babel"),
     nodeResolve = require("rollup-plugin-node-resolve"),
     vue = require("rollup-plugin-vue"),
-    commonjs = require("rollup-plugin-commonjs");
+    commonjs = require("rollup-plugin-commonjs"),
+    uglify = require("rollup-plugin-uglify");
 const pkg = require("../package");
 const buildOption = {
     input: {
@@ -22,7 +23,8 @@ const buildOption = {
             babel({
                 exclude: 'node_modules/**',
                 runtimeHelpers: true
-            })
+            }),
+            uglify()
         ]
     },
     output: {

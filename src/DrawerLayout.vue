@@ -224,7 +224,7 @@
         bottom: 0
         left: 0
         background-color: #000
-        z-index: 914
+        z-index: 818
 
     .moving
         transition transform .3s ease
