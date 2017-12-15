@@ -17,7 +17,7 @@
 ## 依赖
 * [Vue.js](http://vuejs.org) (2.x)
 
-## 浏览器支持
+## 浏览器兼容性
 现代（移动）浏览器或IE10+（支持css transition api），X5内核也经过测试
 
 ## 安装
