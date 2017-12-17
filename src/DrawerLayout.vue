@@ -127,11 +127,11 @@
         },
         mounted() {
             const {width} = this, container = window.document;
-            let t1, t2, speed, startX, startY, nowX, nowY, lastX, startPos, isTouching;
+            let t1, t2, speed, startX, startY, nowX, nowY, lastX, startPos, isVerticle;
             const initDrag = function (e) {
                 if (!this.enable) return;
                 this.willChange = true;
-                isTouching = undefined;
+                isVerticle = undefined;
                 nowX = startX = e.clientX || e.changedTouches[0].clientX;
                 startY = e.clientY || e.changedTouches[0].clientY;
                 t2 = +new Date();
@@ -150,16 +150,16 @@
                 let pos = startPos + nowX - startX;
                 pos = Math.min(width, pos);
                 pos = Math.max(0, pos);
-                if (isTouching === undefined) isTouching = Math.abs(nowY - startY) / Math.abs(nowX - startX) > (Math.sqrt(3) / 3);
-                if (!isTouching) {
+                if (isVerticle === undefined) isVerticle = Math.abs(nowY - startY) / Math.abs(nowX - startX) > (Math.sqrt(3) / 3);
+                if (!isVerticle) {
                     if (!supportsPassive) e.preventDefault();
                     this.pos = pos;
                     this.$emit('slide-move', pos)
                 }
             }.bind(this);
             const removeDrag = function (e) {
-                if (isTouching !== undefined) {
-                    if (!isTouching) {
+                if (isVerticle !== undefined) {
+                    if (!isVerticle) {
                         let pos = this.pos;
                         if (speed > 0) {
                             this.visible = (width - pos) / speed < duration || pos > width * 3 / 5
@@ -174,7 +174,7 @@
                     this.willChange = false;
                     this.$emit('slide-end', this.visible);
                 }
-                isTouching = undefined;
+                isVerticle = undefined;
                 container.removeEventListener(mouseEvents.move, drag, supportsPassive ? {passive: true} : false);
                 container.removeEventListener(mouseEvents.up, removeDrag, supportsPassive ? {passive: true} : false);
             }.bind(this);
