@@ -33,16 +33,12 @@
         {
             down: 'touchstart',
             move: 'touchmove',
-            up: 'touchend',
-            over: 'touchstart',
-            out: 'touchend'
+            up: 'touchend'
         } :
         {
             down: 'mousedown',
             move: 'mousemove',
-            up: 'mouseup',
-            over: 'mouseover',
-            out: 'mouseout'
+            up: 'mouseup'
         };
     export default {
         name: 'vue-drawer-layout',
