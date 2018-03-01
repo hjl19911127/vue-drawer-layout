@@ -2,13 +2,13 @@
     <div class="drawer-layout">
         <div class="drawer-wrap" :class="{'moving':moving,'will-change':willChange}"
              :style="{zIndex:zIndex,width:`${width}px`,left:`-${Math.ceil(width*moveRate)}px`,transform:`translate3d(${Math.ceil(pos*moveRate)}px,0,0)`}">
-            <slot name="drawer"></slot>
+            <slot name="drawer"/>
         </div>
         <div class="content-wrap" :class="{'moving':moving,'will-change':willChange}"
              :style="contentDrawable?{transform:`translate3d(${pos}px,0,0)`}:{}">
             <div class="drawer-mask" @click="handleMaskClick" :style="{'opacity':backdropOpacity}"
                  v-show="backdrop && pos"></div>
-            <slot name="content"></slot>
+            <slot name="content"/>
         </div>
     </div>
 </template>
