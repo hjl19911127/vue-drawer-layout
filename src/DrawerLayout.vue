@@ -13,7 +13,6 @@
     </div>
 </template>
 <script>
-    const defaultWidth = Math.floor(document.body.clientWidth * 0.8);
     const supportsPassive = (() => {
         let supportsPassive = false;
         try {
@@ -43,13 +42,11 @@
     export default {
         name: 'vue-drawer-layout',
         props: {
-            width: {
-                type: Number,
-                default: defaultWidth
+            drawerWidth: {
+                type: Number
             },
             drawableDistance: {
-                type: Number,
-                default: defaultWidth
+                type: Number
             },
             zIndex: {
                 type: Number,
@@ -84,6 +81,8 @@
         },
         data() {
             return {
+                width: this.drawerWidth,
+                distance: this.drawableDistance,
                 pos: 0,
                 visible: false,
                 moving: false,
@@ -117,12 +116,16 @@
                 return min + max * (pos / width) || 0
             },
             moveRate() {
-                const {width, drawableDistance} = this;
-                return drawableDistance / width
+                const {width, distance} = this;
+                return distance / width
             }
         },
         mounted() {
-            const {width} = this, container = window.document;
+            const container = this.$el;
+            let defaultWidth = parseInt(window.getComputedStyle(this.$el.parentNode).width) * 0.8;
+            this.width = this.width || defaultWidth;
+            this.distance = this.distance || defaultWidth;
+            const width = this.width;
             let t1, t2, speed, startX, startY, nowX, nowY, lastX, startPos, isVerticle;
             const initDrag = function (e) {
                 if (!this.enable) return;
