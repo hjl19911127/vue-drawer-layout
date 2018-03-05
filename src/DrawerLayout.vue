@@ -1,11 +1,10 @@
 <template>
     <div class="drawer-layout">
-        <div class="drawer-wrap" :class="{'moving':moving,'will-change':willChange}"
-             :style="{zIndex:zIndex,width:`${width}px`,left:`-${Math.ceil(width*moveRate)}px`,transform:`translate3d(${Math.ceil(pos*moveRate)}px,0,0)`}">
+        <div class="drawer-wrap" :class="animateStyle" :style="drawerStyle">
             <slot name="drawer"/>
         </div>
-        <div class="content-wrap" :class="{'moving':moving,'will-change':willChange}"
-             :style="contentDrawable?{transform:`translate3d(${pos}px,0,0)`}:{}">
+        <div class="content-wrap" :class="contentDrawable?animateStyle:{}"
+             :style="contentDrawable?contentStyle:{}">
             <div class="drawer-mask" @click="handleMaskClick" :style="{'opacity':backdropOpacity}"
                  v-show="backdrop && pos"></div>
             <slot name="content"/>
@@ -77,6 +76,10 @@
             animatable: {
                 type: Boolean,
                 default: true
+            },
+            reverse: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
@@ -110,6 +113,23 @@
             }
         },
         computed: {
+            animateStyle() {
+                const {moving, willChange} = this;
+                return {'moving': moving, 'will-change': willChange};
+            },
+            drawerStyle() {
+                const {zIndex, width, moveRate, pos, reverse} = this;
+                return {
+                    zIndex: zIndex,
+                    width: `${width}px`,
+                    [reverse ? 'right' : 'left']: `-${Math.ceil(width * moveRate)}px`,
+                    transform: `translate3d(${reverse ? '-' : ''}${Math.ceil(pos * moveRate)}px,0,0)`
+                }
+            },
+            contentStyle() {
+                const {pos} = this;
+                return {transform: `translate3d(${reverse ? '-' : ''}${pos}px,0,0)`}
+            },
             backdropOpacity() {
                 const {backdropOpacityRange, pos, width} = this,
                     [min, max] = backdropOpacityRange;
