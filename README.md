@@ -85,8 +85,8 @@ Or you can set every prop as you want to get a fantastic drawer like mobile QQ h
 
 | Name | Info | Type | Default |
 |-----------|-----------|-----------|-------------|
-| width | width of drawer(px) | `Number` | 80% of the body width |
-| drawable-distance | farthest distance to draw(px) | `Number` | same as `width` prop |
+| drawer-width | width of drawer(px) | `Number` | 80% of the container(parentNode) width |
+| drawable-distance | farthest distance to draw(px) | `Number` | same as `drawer-width` prop |
 | z-index | z-index of drawer | `Number` | `818`(Don't Ask^_^) |
 | content-drawable | whether to make content-wrapper drawable | `Boolean` | `false` |
 | backdrop | whether to show backdrop | `Boolean` | `true` |
@@ -119,4 +119,4 @@ Or you can set every prop as you want to get a fantastic drawer like mobile QQ h
 ## License
 [MIT License](LICENSE).
 
-Copyright (c) 2017 Alexander Huang.
+Copyright (c) 2018 Alexander Huang.

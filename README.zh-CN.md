@@ -84,8 +84,8 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 
 | 名称 | 介绍 | 类型 | 默认值 |
 |-----------|-----------|-----------|-------------|
-| width | drawer的宽度(px) | `Number` | body宽度的80% |
-| drawable-distance | drawer可拖拽的最大距离(px) | `Number` | 与`width` 属性一样 |
+| drawer-width | drawer的宽度(px) | `Number` | 父容器宽度的80% |
+| drawable-distance | drawer可拖拽的最大距离(px) | `Number` | 与`drawer-width` 属性一样 |
 | z-index | drawer的z-index | `Number` | `818`（不要问我为什么^_^） |
 | content-drawable | 主容器是否一起移动 | `Boolean` | `false` |
 | backdrop | 是否显示蒙层 | `Boolean` | `true` |
@@ -118,4 +118,4 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 ## 许可证
 [MIT License](LICENSE).
 
-Copyright (c) 2017 Alexander Huang.
+Copyright (c) 2018 Alexander Huang.
