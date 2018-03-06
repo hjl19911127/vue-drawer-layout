@@ -128,7 +128,7 @@
                 };
             },
             contentStyle() {
-                const {pos} = this;
+                const {pos, reverse} = this;
                 return {transform: `translate3d(${reverse ? '-' : ''}${pos}px,0,0)`};
             },
             backdropOpacity() {
