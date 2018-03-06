@@ -7,6 +7,9 @@
 [中文文档](README.zh-CN.md)
 
 ## Demo
+
+[http://share.codehuang.com/vue-drawer-layout](http://share.codehuang.com/vue-drawer-layout)
+
 [Mobile QQ by Alexander Huang(click me or scan the qrcode)](http://chat.codehuang.com/message)
 
 ![Try it](assets/qrcode.png)
@@ -44,7 +47,7 @@ You can easily just set nothing or only`width` prop to get a simple drawer.It ac
 ```html
 <vue-drawer-layout
       ref="drawer"
-      :width="800">
+      :drawer-width="800">
           <div class="drawer-content" slot="drawer">
             <!-- drawer-content -->
           </div>
@@ -58,11 +61,11 @@ Or you can set every prop as you want to get a fantastic drawer like mobile QQ h
 ```html
 <vue-drawer-layout
       ref="drawer"
-      :width="width"
+      :drawer-width="800"
       :enable="true"
       :animatable="true"
       :z-index="0"
-      :drawable-distance="Math.floor(width/3)"
+      :drawable-distance="Math.floor(800/3)"
       :content-drawable="true"
       :backdrop="true"
       :backdrop-opacity-range="[0,0.4]"

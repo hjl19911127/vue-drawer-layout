@@ -6,7 +6,10 @@
 
 [English Doc](README.md)
 
-## 实例
+## 示例
+
+[http://share.codehuang.com/vue-drawer-layout](http://share.codehuang.com/vue-drawer-layout)
+
 [自制的高仿移动QQ（点我或扫下面的二维码）](http://chat.codehuang.com/message)
 
 ![试一试](assets/qrcode.png)
@@ -43,7 +46,7 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 ```html
 <vue-drawer-layout
       ref="drawer"
-      :width="800">
+      :drawer-width="800">
           <div class="drawer-content" slot="drawer">
             <!-- drawer-content -->
           </div>
@@ -57,11 +60,11 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 ```html
 <vue-drawer-layout
       ref="drawer"
-      :width="width"
+      :drawer-width="800"
       :enable="true"
       :animatable="true"
       :z-index="0"
-      :drawable-distance="Math.floor(width/3)"
+      :drawable-distance="Math.floor(800/3)"
       :content-drawable="true"
       :backdrop="true"
       :backdrop-opacity-range="[0,0.4]"
