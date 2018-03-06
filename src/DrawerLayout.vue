@@ -26,8 +26,8 @@
         return supportsPassive;
     })();
     const duration = 500;
-    let isTouch = 'ontouchstart' in window;
-    let mouseEvents = isTouch ?
+    const isTouch = 'ontouchstart' in window;
+    const mouseEvents = isTouch ?
         {
             down: 'touchstart',
             move: 'touchmove',
@@ -38,6 +38,7 @@
             move: 'mousemove',
             up: 'mouseup'
         };
+    let containerWidth;
     export default {
         name: 'vue-drawer-layout',
         props: {
@@ -124,28 +125,28 @@
                     width: `${width}px`,
                     [reverse ? 'right' : 'left']: `-${Math.ceil(width * moveRate)}px`,
                     transform: `translate3d(${reverse ? '-' : ''}${Math.ceil(pos * moveRate)}px,0,0)`
-                }
+                };
             },
             contentStyle() {
                 const {pos} = this;
-                return {transform: `translate3d(${reverse ? '-' : ''}${pos}px,0,0)`}
+                return {transform: `translate3d(${reverse ? '-' : ''}${pos}px,0,0)`};
             },
             backdropOpacity() {
                 const {backdropOpacityRange, pos, width} = this,
                     [min, max] = backdropOpacityRange;
-                return min + max * (pos / width) || 0
+                return min + max * (pos / width) || 0;
             },
             moveRate() {
                 const {width, distance} = this;
-                return distance / width
+                return distance / width;
             }
         },
         mounted() {
-            const container = this.$el;
-            let defaultWidth = parseInt(window.getComputedStyle(this.$el.parentNode).width) * 0.8;
+            const container = this.$el, containerWidth = parseInt(window.getComputedStyle(this.$el.parentNode).width);
+            let defaultWidth = containerWidth * 0.8;
             this.width = this.width || defaultWidth;
             this.distance = this.distance || defaultWidth;
-            const width = this.width;
+            const {width, reverse} = this;
             let t1, t2, speed, startX, startY, nowX, nowY, lastX, startPos, isVerticle;
             const initDrag = function (e) {
                 if (!this.enable) return;
@@ -155,8 +156,8 @@
                 startY = e.clientY || e.changedTouches[0].clientY;
                 t2 = +new Date();
                 startPos = this.pos;
-                container.addEventListener(mouseEvents.move, drag, supportsPassive ? {passive: true} : false);
-                container.addEventListener(mouseEvents.up, removeDrag, supportsPassive ? {passive: true} : false);
+                document.addEventListener(mouseEvents.move, drag, isTouch && supportsPassive ? {passive: true} : false);
+                document.addEventListener(mouseEvents.up, removeDrag, isTouch && supportsPassive ? {passive: true} : false);
                 this.$emit('slide-start')
             }.bind(this);
             const drag = function (e) {
@@ -165,15 +166,15 @@
                 lastX = nowX;
                 nowX = e.clientX || e.changedTouches[0].clientX;
                 nowY = e.clientY || e.changedTouches[0].clientY;
-                speed = (nowX - lastX) / (t2 - t1);
-                let pos = startPos + nowX - startX;
+                speed = [1, -1][+reverse] * (nowX - lastX) / (t2 - t1);
+                let pos = startPos + [1, -1][+reverse] * (nowX - startX);
                 pos = Math.min(width, pos);
                 pos = Math.max(0, pos);
-                if (isVerticle === undefined) isVerticle = Math.abs(nowY - startY) / Math.abs(nowX - startX) > (Math.sqrt(3) / 3);
+                if (isVerticle === undefined) isVerticle = Math.abs(nowX - startX) / Math.abs(nowY - startY) < Math.sqrt(3);
                 if (!isVerticle) {
-                    if (!supportsPassive) e.preventDefault();
+                    if (!(isTouch && supportsPassive)) e.preventDefault();
                     this.pos = pos;
-                    this.$emit('slide-move', pos)
+                    this.$emit('slide-move', pos);
                 }
             }.bind(this);
             const removeDrag = function (e) {
@@ -194,8 +195,8 @@
                     this.$emit('slide-end', this.visible);
                 }
                 isVerticle = undefined;
-                container.removeEventListener(mouseEvents.move, drag, supportsPassive ? {passive: true} : false);
-                container.removeEventListener(mouseEvents.up, removeDrag, supportsPassive ? {passive: true} : false);
+                document.removeEventListener(mouseEvents.move, drag, isTouch && supportsPassive ? {passive: true} : false);
+                document.removeEventListener(mouseEvents.up, removeDrag, isTouch && supportsPassive ? {passive: true} : false);
             }.bind(this);
             'transitionend webkitTransitionEnd msTransitionEnd otransitionend oTransitionEnd'.split(' ').forEach((e) => {
                 this.$el.addEventListener(e, () => {
@@ -207,7 +208,7 @@
                     }
                 }, false)
             });
-            container.addEventListener(mouseEvents.down, initDrag, supportsPassive ? {passive: true} : false);
+            container.addEventListener(mouseEvents.down, initDrag, isTouch && supportsPassive ? {passive: true} : false);
         }
     }
 </script>

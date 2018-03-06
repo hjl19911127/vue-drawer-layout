@@ -35,11 +35,9 @@ const buildOption = {
 }
 
 
-function build() {
-    rm('dist', async () => {
-        const bundle = await rollup.rollup(buildOption.input);
-        await bundle.write(buildOption.output);
-    })
+async function build() {
+    const bundle = await rollup.rollup(buildOption.input);
+    await bundle.write(buildOption.output);
 }
 
 build();
