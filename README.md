@@ -93,6 +93,7 @@ Or you can set every prop as you want to get a fantastic drawer like mobile QQ h
 | backdrop-opacity-range | the opacity range of backdrop[min,max] | `Array` | `[0,0.4]` |
 | enable | is drawer enable | `Boolean` | `true` |
 | animatable | is drawer animate during moving | `Boolean` | `true` |
+| reverse | is drawer slide out from right | `Boolean` | `false` |
 
 ### Slots
 

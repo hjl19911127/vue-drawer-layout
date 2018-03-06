@@ -92,6 +92,7 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 | backdrop-opacity-range | 蒙层的透明度范围[min,max] | `Array` | `[0,0.4]` |
 | enable | 启用禁用drawer功能 | `Boolean` | `true` |
 | animatable | drawer移动过程是否有动画 | `Boolean` | `true` |
+| reverse | drawer从右侧滑出 | `Boolean` | `false` |
 
 ### Slots
 
