@@ -43,7 +43,7 @@ Vue.use(DrawerLayout)
 import {DrawerLayout} from 'vue-drawer-layout'
 Vue.component(DrawerLayout.name, DrawerLayout)
 ```
-You can easily just set nothing or only`width` prop to get a simple drawer.It act above the main content.
+You can easily just set nothing or only`drawer-width` prop to get a simple drawer.It act above the main content.
 ```html
 <vue-drawer-layout
       ref="drawer"

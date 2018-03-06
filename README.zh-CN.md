@@ -42,7 +42,7 @@ Vue.use(DrawerLayout)
 import {DrawerLayout} from 'vue-drawer-layout'
 Vue.component(DrawerLayout.name, DrawerLayout)
 ```
-你可以什么属性也不传，或者只设一个width就能得到一个简单的drawer（像Android原生的drawerLayout那样drawer在上面）
+你可以什么属性也不传，或者只设置`drawer-width`属性就能得到一个简单的drawer（像Android原生的drawerLayout那样drawer在上面）
 ```html
 <vue-drawer-layout
       ref="drawer"
