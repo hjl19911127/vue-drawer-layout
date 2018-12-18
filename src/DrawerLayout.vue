@@ -22,6 +22,7 @@
             });
             window.addEventListener("test", null, opts);
         } catch (e) {
+            throw e
         }
         return supportsPassive;
     })();
@@ -38,7 +39,6 @@
             move: 'mousemove',
             up: 'mouseup'
         };
-    let containerWidth;
     export default {
         name: 'vue-drawer-layout',
         props: {
@@ -177,7 +177,7 @@
                     this.$emit('slide-move', pos);
                 }
             }.bind(this);
-            const removeDrag = function (e) {
+            const removeDrag = function () {
                 if (isVerticle !== undefined) {
                     if (!isVerticle) {
                         let pos = this.pos;
