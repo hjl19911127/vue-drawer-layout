@@ -12,19 +12,6 @@
     </div>
 </template>
 <script>
-    const supportsPassive = (() => {
-        let supportsPassive = false;
-        try {
-            const opts = Object.defineProperty({}, 'passive', {
-                get: function () {
-                    supportsPassive = true;
-                }
-            });
-            window.addEventListener("test", null, opts);
-        } catch (e) {
-        }
-        return supportsPassive;
-    })();
     const duration = 500;
     const isTouch = 'ontouchstart' in window;
     const mouseEvents = isTouch ?
@@ -142,6 +129,19 @@
             }
         },
         mounted() {
+            const supportsPassive = (() => {
+                let supportsPassive = false;
+                try {
+                    const opts = Object.defineProperty({}, 'passive', {
+                        get: function () {
+                            supportsPassive = true;
+                        }
+                    });
+                    window.addEventListener("test", null, opts);
+                } catch (e) {
+                }
+                return supportsPassive;
+            })();
             const container = this.$el, containerWidth = parseInt(window.getComputedStyle(this.$el.parentNode).width);
             let defaultWidth = containerWidth * 0.8;
             this.width = this.width || defaultWidth;
