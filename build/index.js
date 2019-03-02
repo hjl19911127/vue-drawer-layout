@@ -21,7 +21,7 @@ const buildOption = {
                 css: true
             }),
             babel({
-                exclude: 'node_modules/**',
+                exclude: "node_modules/**",
                 runtimeHelpers: true
             }),
             uglify()
@@ -32,8 +32,7 @@ const buildOption = {
         format: "umd",
         name: "DrawerLayout"
     }
-}
-
+};
 
 async function build() {
     const bundle = await rollup.rollup(buildOption.input);
