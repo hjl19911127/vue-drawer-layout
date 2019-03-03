@@ -177,7 +177,7 @@
                     this.$emit('slide-move', pos);
                 }
             }.bind(this);
-            const removeDrag = function (e) {
+            const removeDrag = function () {
                 if (isVerticle !== undefined) {
                     if (!isVerticle) {
                         let pos = this.pos;

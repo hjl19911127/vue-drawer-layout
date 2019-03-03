@@ -2,7 +2,7 @@
 [![npm](https://img.shields.io/npm/v/vue-drawer-layout.svg)](https://www.npmjs.org/package/vue-drawer-layout)
 [![npm](https://img.shields.io/npm/dt/vue-drawer-layout.svg)](https://www.npmjs.org/package/vue-drawer-layout)
 [![npm](https://img.shields.io/npm/l/vue-drawer-layout.svg)](https://www.npmjs.org/package/vue-drawer-layout)
-> 一个简单的DrawerLayout（类似Android的DrawerLayout）布局组件，基于[Vue.js](http://vuejs.org)
+> 一个简单的DrawerLayout（抽屉组件）布局组件，基于[Vue.js](http://vuejs.org)
 
 [English Doc](README.md)
 
@@ -43,41 +43,39 @@ import {DrawerLayout} from 'vue-drawer-layout'
 Vue.component(DrawerLayout.name, DrawerLayout)
 ```
 你可以什么属性也不传，或者只设置`drawer-width`属性就能得到一个简单的drawer（像Android原生的drawerLayout那样drawer在上面）
-```html
-<vue-drawer-layout
-      ref="drawer"
-      :drawer-width="800">
-          <div class="drawer-content" slot="drawer">
-            <!-- drawer-content -->
-          </div>
-          <div slot="content">
-            <!-- main-content -->
-          </div>
+```vue
+<vue-drawer-layout ref="drawer" :drawer-width="800">
+  <div class="drawer-content" slot="drawer">
+    <!-- drawer-content -->
+  </div>
+  <div slot="content">
+    <!-- main-content -->
+  </div>
 </vue-drawer-layout>
 ```
 或者你可以设置所有属性来得到一个更惊艳的drawer，想移动QQ那样（drawer从主容器下方出现，且移动的距离只有总宽度的1/3）
 
-```html
+```vue
 <vue-drawer-layout
-      ref="drawer"
-      :drawer-width="800"
-      :enable="true"
-      :animatable="true"
-      :z-index="0"
-      :drawable-distance="Math.floor(800/3)"
-      :content-drawable="true"
-      :backdrop="true"
-      :backdrop-opacity-range="[0,0.4]"
-      @slide-start="handleSlideStart"
-      @slide-move="handleSlideMove"
-      @slide-end="handleSlideEnd"
-      @mask-click="handleMaskClick">
-          <div class="drawer-content" slot="drawer">
-            <!-- drawer-content -->
-          </div>
-          <div slot="content">
-            <!-- main-content -->
-          </div>
+  ref="drawer"
+  :drawer-width="800"
+  :enable="true"
+  :animatable="true"
+  :z-index="0"
+  :drawable-distance="Math.floor(800/3)"
+  :content-drawable="true"
+  :backdrop="true"
+  :backdrop-opacity-range="[0,0.4]"
+  @slide-start="handleSlideStart"
+  @slide-move="handleSlideMove"
+  @slide-end="handleSlideEnd"
+  @mask-click="handleMaskClick">
+    <div class="drawer-content" slot="drawer">
+      <!-- drawer-content -->
+    </div>
+    <div slot="content">
+      <!-- main-content -->
+    </div>
 </vue-drawer-layout>
 ```
 

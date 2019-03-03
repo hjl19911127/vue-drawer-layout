@@ -2,7 +2,7 @@ const rm = require("rimraf"),
     rollup = require("rollup"),
     babel = require("rollup-plugin-babel"),
     nodeResolve = require("rollup-plugin-node-resolve"),
-    vue = require("rollup-plugin-vue"),
+    VuePlugin = require("rollup-plugin-vue"),
     commonjs = require("rollup-plugin-commonjs"),
     uglify = require("rollup-plugin-uglify");
 const pkg = require("../package");
@@ -17,9 +17,7 @@ const buildOption = {
                 extensions: [".vue", ".js", ".json"]
             }),
             commonjs(),
-            vue({
-                css: true
-            }),
+            VuePlugin(),
             babel({
                 exclude: "node_modules/**",
                 runtimeHelpers: true

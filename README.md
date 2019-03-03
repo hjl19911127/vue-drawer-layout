@@ -2,7 +2,7 @@
 [![npm](https://img.shields.io/npm/v/vue-drawer-layout.svg)](https://www.npmjs.org/package/vue-drawer-layout)
 [![npm](https://img.shields.io/npm/dt/vue-drawer-layout.svg)](https://www.npmjs.org/package/vue-drawer-layout)
 [![npm](https://img.shields.io/npm/l/vue-drawer-layout.svg)](https://www.npmjs.org/package/vue-drawer-layout)
-> A simple DrawerLayout component like Android has for [Vue.js](http://vuejs.org)
+> A simple DrawerLayout component for [Vue.js](http://vuejs.org)
 
 [中文文档](README.zh-CN.md)
 
@@ -44,41 +44,39 @@ import {DrawerLayout} from 'vue-drawer-layout'
 Vue.component(DrawerLayout.name, DrawerLayout)
 ```
 You can easily just set nothing or only `drawer-width` prop to get a simple drawer.It act above the main content.
-```html
-<vue-drawer-layout
-      ref="drawer"
-      :drawer-width="800">
-          <div class="drawer-content" slot="drawer">
-            <!-- drawer-content -->
-          </div>
-          <div slot="content">
-            <!-- main-content -->
-          </div>
+```vue
+<vue-drawer-layout ref="drawer" :drawer-width="800">
+  <div class="drawer-content" slot="drawer">
+    <!-- drawer-content -->
+  </div>
+  <div slot="content">
+    <!-- main-content -->
+  </div>
 </vue-drawer-layout>
 ```
 Or you can set every prop as you want to get a fantastic drawer like mobile QQ has(It act below the main content and with distance is 1/3 of the main content drag).
 
-```html
+```vue
 <vue-drawer-layout
-      ref="drawer"
-      :drawer-width="800"
-      :enable="true"
-      :animatable="true"
-      :z-index="0"
-      :drawable-distance="Math.floor(800/3)"
-      :content-drawable="true"
-      :backdrop="true"
-      :backdrop-opacity-range="[0,0.4]"
-      @slide-start="handleSlideStart"
-      @slide-move="handleSlideMove"
-      @slide-end="handleSlideEnd"
-      @mask-click="handleMaskClick">
-          <div class="drawer-content" slot="drawer">
-            <!-- drawer-content -->
-          </div>
-          <div slot="content">
-            <!-- main-content -->
-          </div>
+  ref="drawer"
+  :drawer-width="800"
+  :enable="true"
+  :animatable="true"
+  :z-index="0"
+  :drawable-distance="Math.floor(800/3)"
+  :content-drawable="true"
+  :backdrop="true"
+  :backdrop-opacity-range="[0,0.4]"
+  @slide-start="handleSlideStart"
+  @slide-move="handleSlideMove"
+  @slide-end="handleSlideEnd"
+  @mask-click="handleMaskClick">
+    <div class="drawer-content" slot="drawer">
+      <!-- drawer-content -->
+    </div>
+    <div slot="content">
+      <!-- main-content -->
+    </div>
 </vue-drawer-layout>
 ```
 
