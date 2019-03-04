@@ -17,17 +17,17 @@
   export default {
     methods: {
       handleSlideStart() {
-        console.info('slide-start');
+        console.info('slide-start')
       },
       handleSlideMove(position) {
-        console.info('slide-move', position);
+        console.info('slide-move', position)
       },
       handleSlideEnd(visible) {
-        console.info('slide-end', visible);
+        console.info('slide-end', visible)
       },
       handleMaskClick() {
-        console.info('mask-click');
-        this.$refs.drawerLayout.toggle(false);
+        console.info('mask-click')
+        this.$refs.drawerLayout.toggle(false)
       }
     }
   }

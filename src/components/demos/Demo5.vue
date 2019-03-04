@@ -15,7 +15,7 @@
   export default {
     methods: {
       handleToggleDrawer() {
-        this.$refs.drawerLayout.toggle();
+        this.$refs.drawerLayout.toggle()
       }
     }
   }
