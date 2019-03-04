@@ -2,14 +2,14 @@
   "name": "vue-drawer-layout",
   "version": "0.3.5",
   "description": "A simple drawer layout component for Vue.js",
-  "main": "dist/vue-drawer-layout.js",
+  "main": "lib/vue-drawer-layout.common.js",
   "files": [
     "src",
-    "dist/*.js"
+    "lib/*.js"
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "npm run build:lib",
     "build:lib": "vue-cli-service build --target lib --name vue-drawer-layout --dest lib ./src/lib/index.js",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
