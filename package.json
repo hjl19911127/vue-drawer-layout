@@ -4,7 +4,7 @@
   "description": "A simple drawer layout component for Vue.js",
   "main": "lib/vue-drawer-layout.common.js",
   "files": [
-    "src",
+    "src/lib",
     "lib/*.js"
   ],
   "scripts": {
