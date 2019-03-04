@@ -12,8 +12,8 @@
   </div>
 </template>
 <script>
-  const duration = 500;
-  const isTouch = 'ontouchstart' in window;
+  const duration = 500
+  const isTouch = 'ontouchstart' in window
   const mouseEvents = isTouch ?
     {
       down: 'touchstart',
@@ -24,8 +24,8 @@
       down: 'mousedown',
       move: 'mousemove',
       up: 'mouseup'
-    };
-  let containerWidth;
+    }
+  let containerWidth
   export default {
     name: 'vue-drawer-layout',
     props: {
@@ -53,7 +53,7 @@
           return [0, 0.4]
         },
         validator: function (value) {
-          let [min, max] = value;
+          let [min, max] = value
           return min < max && min >= 0 && max <= 1
         }
       },
@@ -82,113 +82,113 @@
     },
     methods: {
       toggle(visible) {
-        if (visible === undefined) visible = !this.visible;
-        this.visible = visible;
-        this.pos = visible ? this.width : 0;
+        if (visible === undefined) visible = !this.visible
+        this.visible = visible
+        this.pos = visible ? this.width : 0
         this.moving = true
       },
       handleMaskClick() {
-        if (this.moving) return;
+        if (this.moving) return
         this.$emit('mask-click')
       }
     },
     watch: {
       'moving'() {
-        if (!this.animatable) this.moving = false;
+        if (!this.animatable) this.moving = false
       },
       'willChange'() {
-        if (!this.animatable) this.willChange = false;
+        if (!this.animatable) this.willChange = false
       }
     },
     computed: {
       animateStyle() {
-        const {moving, willChange} = this;
-        return {'moving': moving, 'will-change': willChange};
+        const {moving, willChange} = this
+        return {'moving': moving, 'will-change': willChange}
       },
       drawerStyle() {
-        const {zIndex, width, moveRate, pos, reverse} = this;
+        const {zIndex, width, moveRate, pos, reverse} = this
         return {
           zIndex: zIndex,
           width: `${width}px`,
           [reverse ? 'right' : 'left']: `-${Math.ceil(width * moveRate)}px`,
           transform: `translate3d(${reverse ? '-' : ''}${Math.ceil(pos * moveRate)}px,0,0)`
-        };
+        }
       },
       contentStyle() {
-        const {pos, reverse} = this;
-        return {transform: `translate3d(${reverse ? '-' : ''}${pos}px,0,0)`};
+        const {pos, reverse} = this
+        return {transform: `translate3d(${reverse ? '-' : ''}${pos}px,0,0)`}
       },
       backdropOpacity() {
         const {backdropOpacityRange, pos, width} = this,
-          [min, max] = backdropOpacityRange;
-        return min + max * (pos / width) || 0;
+          [min, max] = backdropOpacityRange
+        return min + max * (pos / width) || 0
       },
       moveRate() {
-        const {width, distance} = this;
-        return distance / width;
+        const {width, distance} = this
+        return distance / width
       }
     },
     mounted() {
       const supportsPassive = (() => {
-        let supportsPassive = false;
+        let supportsPassive = false
         try {
           const opts = Object.defineProperty({}, 'passive', {
             get: function () {
-              supportsPassive = true;
+              supportsPassive = true
             }
-          });
-          window.addEventListener("test", null, opts);
+          })
+          window.addEventListener("test", null, opts)
         } catch (e) {
         }
-        return supportsPassive;
-      })();
-      const container = this.$el, containerWidth = parseInt(window.getComputedStyle(this.$el.parentNode).width);
-      let defaultWidth = containerWidth * 0.8;
-      this.width = this.width || defaultWidth;
-      this.distance = this.distance || defaultWidth;
-      const {width, reverse} = this;
-      let t1, t2, speed, startX, startY, nowX, nowY, lastX, startPos, isVerticle;
+        return supportsPassive
+      })()
+      const container = this.$el, containerWidth = parseInt(window.getComputedStyle(this.$el.parentNode).width)
+      let defaultWidth = containerWidth * 0.8
+      this.width = this.width || defaultWidth
+      this.distance = this.distance || defaultWidth
+      const {width, reverse} = this
+      let t1, t2, speed, startX, startY, nowX, nowY, lastX, startPos, isVerticle
       const initDrag = function (e) {
-        if (!this.enable) return;
-        this.willChange = true;
-        isVerticle = undefined;
-        nowX = startX = e.clientX || e.changedTouches[0].clientX;
-        startY = e.clientY || e.changedTouches[0].clientY;
-        t2 = +new Date();
-        startPos = this.pos;
-        document.addEventListener(mouseEvents.move, drag, isTouch && supportsPassive ? {passive: true} : false);
-        document.addEventListener(mouseEvents.up, removeDrag, isTouch && supportsPassive ? {passive: true} : false);
+        if (!this.enable) return
+        this.willChange = true
+        isVerticle = undefined
+        nowX = startX = e.clientX || e.changedTouches[0].clientX
+        startY = e.clientY || e.changedTouches[0].clientY
+        t2 = +new Date()
+        startPos = this.pos
+        document.addEventListener(mouseEvents.move, drag, isTouch && supportsPassive ? {passive: true} : false)
+        document.addEventListener(mouseEvents.up, removeDrag, isTouch && supportsPassive ? {passive: true} : false)
         this.$emit('slide-start')
-      }.bind(this);
+      }.bind(this)
       const drag = function (e) {
-        t1 = t2;
-        t2 = +new Date();
-        lastX = nowX;
-        nowX = e.clientX || e.changedTouches[0].clientX;
-        nowY = e.clientY || e.changedTouches[0].clientY;
-        speed = [1, -1][+reverse] * (nowX - lastX) / (t2 - t1);
-        let pos = startPos + [1, -1][+reverse] * (nowX - startX);
-        pos = Math.min(width, pos);
-        pos = Math.max(0, pos);
-        if (isVerticle === undefined) isVerticle = Math.abs(nowX - startX) / Math.abs(nowY - startY) < Math.sqrt(3);
+        t1 = t2
+        t2 = +new Date()
+        lastX = nowX
+        nowX = e.clientX || e.changedTouches[0].clientX
+        nowY = e.clientY || e.changedTouches[0].clientY
+        speed = [1, -1][+reverse] * (nowX - lastX) / (t2 - t1)
+        let pos = startPos + [1, -1][+reverse] * (nowX - startX)
+        pos = Math.min(width, pos)
+        pos = Math.max(0, pos)
+        if (isVerticle === undefined) isVerticle = Math.abs(nowX - startX) / Math.abs(nowY - startY) < Math.sqrt(3)
         if (!isVerticle) {
-          if (!(isTouch && supportsPassive)) e.preventDefault();
-          this.pos = pos;
-          this.$emit('slide-move', pos);
+          if (!(isTouch && supportsPassive)) e.preventDefault()
+          this.pos = pos
+          this.$emit('slide-move', pos)
         }
-      }.bind(this);
+      }.bind(this)
       const removeDrag = function () {
         if (isVerticle !== undefined) {
           if (!isVerticle) {
-            let pos = this.pos;
+            let pos = this.pos
             if (speed > 0) {
               this.visible = (width - pos) / speed < duration || pos > width * 3 / 5
             } else {
               this.visible = !((0 - pos) / speed < duration || pos < width * 3 / 5)
             }
-            if (this.pos > 0 && this.pos < width) this.moving = true;
+            if (this.pos > 0 && this.pos < width) this.moving = true
           }
-          this.pos = this.visible ? width : 0;
+          this.pos = this.visible ? width : 0
         }
         if (!this.moving) {
           this.willChange = false
@@ -207,7 +207,7 @@
             this.$emit('slide-end', this.visible)
           }
         }, false)
-      });
+      })
       container.addEventListener(mouseEvents.down, initDrag, isTouch && supportsPassive ? {passive: true} : false)
     }
   }
