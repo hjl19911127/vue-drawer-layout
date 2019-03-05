@@ -1,20 +1,19 @@
 import {expect} from 'chai'
-import {shallowMount, mount, render, createLocalVue} from '@vue/test-utils'
+import {shallowMount, render, createLocalVue} from '@vue/test-utils'
 import HelloWorld from '@/components/HelloWorld.vue'
 import DrawerLayoutPlugin from '@/lib'
 import {DrawerLayout} from '@/lib'
-import Test from './test'
+import Test from './test.vue'
 
-const testComponent = ''
 describe('Test DrawerLayout Installation', () => {
-  it('install component when passed', async () => {
+  it('install component when passed', () => {
     const localVue = createLocalVue()
     localVue.use(DrawerLayoutPlugin)
-    const wrapper = await render(Test, {
+    const wrapper = shallowMount(Test, {
       localVue,
       attachToDocument: true
     })
-    expect(wrapper.find(DrawerLayout).is(DrawerLayout)).toBe(true)
+    expect(wrapper.find(DrawerLayout).is(DrawerLayout)).to.equals(true)
   })
   it('renders drawer with width prop when passed', async () => {
 
