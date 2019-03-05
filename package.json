@@ -36,7 +36,6 @@
   },
   "homepage": "https://github.com/hjl19911127/vue-drawer-layout#readme",
   "dependencies": {
-    "normalize.css": "^8.0.1",
     "vue": "^2.6.6"
   },
   "devDependencies": {
@@ -51,6 +50,7 @@
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
     "fibers": "^3.1.1",
+    "normalize.css": "^8.0.1",
     "sass": "^1.16.0",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.5.21"
