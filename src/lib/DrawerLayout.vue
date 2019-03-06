@@ -12,19 +12,14 @@
   </div>
 </template>
 <script>
-  const duration = 500
-  const isTouch = 'ontouchstart' in window
-  const mouseEvents = isTouch ?
-    {
-      down: 'touchstart',
-      move: 'touchmove',
-      up: 'touchend'
-    } :
-    {
-      down: 'mousedown',
-      move: 'mousemove',
-      up: 'mouseup'
-    }
+  import {
+    defaultDuration,
+    handledEvents,
+    supportsTouchDetector,
+    supportsPassiveDetector,
+    supportsTransitionsDetector
+  } from './helper'
+
   let containerWidth
   export default {
     name: 'vue-drawer-layout',
@@ -77,7 +72,8 @@
         pos: 0,
         visible: false,
         moving: false,
-        willChange: false
+        willChange: false,
+        canAnimate: false
       }
     },
     methods: {
@@ -85,19 +81,11 @@
         if (visible === undefined) visible = !this.visible
         this.visible = visible
         this.pos = visible ? this.width : 0
-        this.moving = true
+        if (this.canAnimate) this.moving = true
       },
       handleMaskClick() {
         if (this.moving) return
         this.$emit('mask-click')
-      }
-    },
-    watch: {
-      'moving'() {
-        if (!this.animatable) this.moving = false
-      },
-      'willChange'() {
-        if (!this.animatable) this.willChange = false
       }
     },
     computed: {
@@ -129,64 +117,67 @@
       }
     },
     mounted() {
-      const supportsPassive = (() => {
-        let supportsPassive = false
-        try {
-          const opts = Object.defineProperty({}, 'passive', {
-            get: function () {
-              supportsPassive = true
-            }
-          })
-          window.addEventListener("test", null, opts)
-        } catch (e) {
-        }
-        return supportsPassive
-      })()
-      const container = this.$el, containerWidth = parseInt(window.getComputedStyle(this.$el.parentNode).width)
+      const supportsTouch = supportsTouchDetector(),
+        supportsTransitions = supportsTransitionsDetector(),
+        supportsPassive = supportsPassiveDetector();
+      const container = this.$el
+      containerWidth = parseInt(window.getComputedStyle(container.parentNode).width)
+      this.canAnimate = this.animatable && supportsTransitions
       let defaultWidth = containerWidth * 0.8
       this.width = this.width || defaultWidth
       this.distance = this.distance || defaultWidth
       const {width, reverse} = this
-      let t1, t2, speed, startX, startY, nowX, nowY, lastX, startPos, isVerticle
+      let t1, t2, speed, startX, startY, nowX, nowY, lastX, startPos, isVertical
       const initDrag = function (e) {
         if (!this.enable) return
         this.willChange = true
-        isVerticle = undefined
-        nowX = startX = e.clientX || e.changedTouches[0].clientX
-        startY = e.clientY || e.changedTouches[0].clientY
+        isVertical = undefined
+        nowX = startX = supportsTouch ? e.changedTouches[0].clientX : e.clientX
+        startY = supportsTouch ? e.changedTouches[0].clientY : e.clientY
         t2 = +new Date()
         startPos = this.pos
-        document.addEventListener(mouseEvents.move, drag, isTouch && supportsPassive ? {passive: true} : false)
-        document.addEventListener(mouseEvents.up, removeDrag, isTouch && supportsPassive ? {passive: true} : false)
+        document.addEventListener(handledEvents.move, drag, supportsTouch && supportsPassive ? {passive: true} : false)
+        document.addEventListener(handledEvents.up, removeDrag, supportsTouch && supportsPassive ? {passive: true} : false)
         this.$emit('slide-start')
       }.bind(this)
       const drag = function (e) {
         t1 = t2
         t2 = +new Date()
         lastX = nowX
-        nowX = e.clientX || e.changedTouches[0].clientX
-        nowY = e.clientY || e.changedTouches[0].clientY
+        nowX = supportsTouch ? e.changedTouches[0].clientX : e.clientX
+        nowY = supportsTouch ? e.changedTouches[0].clientY : e.clientY
         speed = [1, -1][+reverse] * (nowX - lastX) / (t2 - t1)
         let pos = startPos + [1, -1][+reverse] * (nowX - startX)
         pos = Math.min(width, pos)
         pos = Math.max(0, pos)
-        if (isVerticle === undefined) isVerticle = Math.abs(nowX - startX) / Math.abs(nowY - startY) < Math.sqrt(3)
-        if (!isVerticle) {
-          if (!(isTouch && supportsPassive)) e.preventDefault()
+        if (isVertical === undefined) {
+          const absX = Math.abs(nowX - startX), absY = Math.abs(nowY - startY)
+          if (absX) {
+            if (absY) {
+              isVertical = Math.abs(nowX - startX) / Math.abs(nowY - startY) < Math.sqrt(3)
+            } else {
+              isVertical = false
+            }
+          }
+        }
+        if (!isVertical) {
+          if (!(supportsTouch && supportsPassive)) e.preventDefault()
           this.pos = pos
           this.$emit('slide-move', pos)
         }
       }.bind(this)
       const removeDrag = function () {
-        if (isVerticle !== undefined) {
-          if (!isVerticle) {
+        if (isVertical !== undefined) {
+          if (!isVertical) {
             let pos = this.pos
             if (speed > 0) {
-              this.visible = (width - pos) / speed < duration || pos > width * 3 / 5
+              this.visible = (width - pos) / speed < defaultDuration || pos > width * 3 / 5
             } else {
-              this.visible = !((0 - pos) / speed < duration || pos < width * 3 / 5)
+              this.visible = !((0 - pos) / speed < defaultDuration || pos < width * 3 / 5)
             }
-            if (this.pos > 0 && this.pos < width) this.moving = true
+            if (this.pos > 0 && this.pos < width && this.canAnimate) {
+              this.moving = true
+            }
           }
           this.pos = this.visible ? width : 0
         }
@@ -194,12 +185,12 @@
           this.willChange = false
           this.$emit('slide-end', this.visible)
         }
-        isVerticle = undefined
-        document.removeEventListener(mouseEvents.move, drag, isTouch && supportsPassive ? {passive: true} : false)
-        document.removeEventListener(mouseEvents.up, removeDrag, isTouch && supportsPassive ? {passive: true} : false)
+        isVertical = undefined
+        document.removeEventListener(handledEvents.move, drag, supportsTouch && supportsPassive ? {passive: true} : false)
+        document.removeEventListener(handledEvents.up, removeDrag, supportsTouch && supportsPassive ? {passive: true} : false)
       }.bind(this)
       'transitionend webkitTransitionEnd msTransitionEnd otransitionend oTransitionEnd'.split(' ').forEach((e) => {
-        this.$el.addEventListener(e, () => {
+        container.addEventListener(e, () => {
           if (this.moving) {
             this.moving = false
             this.willChange = false
@@ -208,7 +199,7 @@
           }
         }, false)
       })
-      container.addEventListener(mouseEvents.down, initDrag, isTouch && supportsPassive ? {passive: true} : false)
+      container.addEventListener(handledEvents.down, initDrag, supportsTouch && supportsPassive ? {passive: true} : false)
     }
   }
 </script>

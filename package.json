@@ -12,8 +12,7 @@
     "build": "npm run build:lib",
     "build:lib": "vue-cli-service build --target lib --name vue-drawer-layout --dest lib ./src/lib/index.js",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit",
-    "test:unit1": "node ./node_modules/jest/bin/jest.js --clearCache"
+    "test:unit": "vue-cli-service test:unit"
   },
   "repository": {
     "type": "git",

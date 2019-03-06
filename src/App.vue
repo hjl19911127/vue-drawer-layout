@@ -5,7 +5,7 @@
         <div class="left">
           <h1 class="title">Vue Drawer Layout</h1>
           <h3 class="hint">
-            A simple DrawerLayout component like Android has for
+            A simple DrawerLayout component for
             <a href="http://vuejs.org">Vue.js</a>
           </h3>
         </div>
