@@ -47,7 +47,7 @@ import {DrawerLayout} from 'vue-drawer-layout'
 Vue.component(DrawerLayout.name, DrawerLayout)
 ```
 你可以什么属性也不传，或者只设置`drawer-width`属性就能得到一个简单的drawer（像Android原生的drawerLayout那样drawer在上面）
-```vue
+```html
 <vue-drawer-layout ref="drawer" :drawer-width="800">
   <div class="drawer-content" slot="drawer">
     <!-- drawer-content -->
@@ -59,7 +59,7 @@ Vue.component(DrawerLayout.name, DrawerLayout)
 ```
 或者你可以设置所有属性来得到一个更惊艳的drawer，想移动QQ那样（drawer从主容器下方出现，且移动的距离只有总宽度的1/3）
 
-```vue
+```html
 <vue-drawer-layout
   ref="drawer"
   :drawer-width="800"
