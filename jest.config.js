@@ -15,6 +15,6 @@ module.exports = {
   ],
   testURL: "http://localhost/",
   collectCoverage: true,
-  collectCoverageFrom: ["src/lib/DrawerLayout.vue"],
+  collectCoverageFrom: ["src/lib/**/*.{js,vue}", "!**/node_modules/**"],
   coverageReporters: ["html", "text-summary"]
 };
