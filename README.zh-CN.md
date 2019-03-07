@@ -1,8 +1,10 @@
 # vue-drawer-layout
 [![npm](https://img.shields.io/npm/v/vue-drawer-layout.svg)](https://www.npmjs.org/package/vue-drawer-layout)
 [![npm](https://img.shields.io/npm/dt/vue-drawer-layout.svg)](https://www.npmjs.org/package/vue-drawer-layout)
+[![travis](https://img.shields.io/travis/hjl19911127/vue-drawer-layout.svg)](https://travis-ci.org/hjl19911127/vue-drawer-layout)
+[![npm](https://img.shields.io/codecov/c/gh/hjl19911127/vue-drawer-layout.svg)](https://codecov.io/gh/hjl19911127/vue-drawer-layout)
 [![npm](https://img.shields.io/npm/l/vue-drawer-layout.svg)](https://www.npmjs.org/package/vue-drawer-layout)
-> 一个简单的DrawerLayout（抽屉组件）布局组件，基于[Vue.js](http://vuejs.org)
+> 一个简单的DrawerLayout（抽屉组件 / 侧滑菜单）布局组件，基于[Vue.js](http://vuejs.org)
 
 [English Doc](README.md)
 
