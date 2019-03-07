@@ -20,7 +20,6 @@
     supportsTransitionsDetector
   } from './helper'
 
-  let containerWidth
   export default {
     name: 'vue-drawer-layout',
     props: {
@@ -94,17 +93,18 @@
         return {'moving': moving, 'will-change': willChange}
       },
       drawerStyle() {
-        const {zIndex, width, moveRate, pos, reverse} = this
+        const {zIndex, width, moveRate, pos, reverse} = this, initialOffset = Math.ceil(width * moveRate),
+          nowPosition = Math.ceil(pos * moveRate)
         return {
           zIndex: zIndex,
           width: `${width}px`,
-          [reverse ? 'right' : 'left']: `-${Math.ceil(width * moveRate)}px`,
-          transform: `translate3d(${reverse ? '-' : ''}${Math.ceil(pos * moveRate)}px,0,0)`
+          [reverse ? 'right' : 'left']: (initialOffset || 0) && `-${initialOffset}px`,
+          transform: `translate3d(${(nowPosition || 0) && `${reverse ? '-' : ''}${nowPosition}px`},0,0)`
         }
       },
       contentStyle() {
         const {pos, reverse} = this
-        return {transform: `translate3d(${reverse ? '-' : ''}${pos}px,0,0)`}
+        return {transform: `translate3d(${(pos || 0) && `${reverse ? '-' : ''}${pos}px`},0,0)`}
       },
       backdropOpacity() {
         const {backdropOpacityRange, pos, width} = this,
@@ -120,14 +120,18 @@
       const supportsTouch = supportsTouchDetector(),
         supportsTransitions = supportsTransitionsDetector(),
         supportsPassive = supportsPassiveDetector();
-      const container = this.$el
-      containerWidth = parseInt(window.getComputedStyle(container.parentNode).width)
       this.canAnimate = this.animatable && supportsTransitions
-      let defaultWidth = containerWidth * 0.8
-      this.width = this.width || defaultWidth
-      this.distance = this.distance || defaultWidth
-      const {width, reverse} = this
+      const container = this.$el
+      //Get initial width from its parentNode
+      if (typeof this.width === "undefined" || typeof this.distance === "undefined") {
+        const containerWidth = parseInt(window.getComputedStyle(container.parentNode).width),
+          defaultWidth = containerWidth * 0.8
+        this.width = typeof this.width === "undefined" ? defaultWidth : this.width
+        this.distance = typeof this.distance === "undefined" ? defaultWidth : this.distance
+      }
+      const {width, reverse, canAnimate} = this
       let t1, t2, speed, startX, startY, nowX, nowY, lastX, startPos, isVertical
+      //Start dragging handler
       const initDrag = function (e) {
         if (!this.enable) return
         this.willChange = true
@@ -140,6 +144,7 @@
         document.addEventListener(handledEvents.up, removeDrag, supportsTouch && supportsPassive ? {passive: true} : false)
         this.$emit('slide-start')
       }.bind(this)
+      //During dragging handler
       const drag = function (e) {
         t1 = t2
         t2 = +new Date()
@@ -166,6 +171,7 @@
           this.$emit('slide-move', pos)
         }
       }.bind(this)
+      //Stop dragging handler
       const removeDrag = function () {
         if (isVertical !== undefined) {
           if (!isVertical) {
@@ -175,7 +181,7 @@
             } else {
               this.visible = !((0 - pos) / speed < defaultDuration || pos < width * 3 / 5)
             }
-            if (this.pos > 0 && this.pos < width && this.canAnimate) {
+            if (this.pos > 0 && this.pos < width && canAnimate) {
               this.moving = true
             }
           }
@@ -189,6 +195,7 @@
         document.removeEventListener(handledEvents.move, drag, supportsTouch && supportsPassive ? {passive: true} : false)
         document.removeEventListener(handledEvents.up, removeDrag, supportsTouch && supportsPassive ? {passive: true} : false)
       }.bind(this)
+      //Check transitionend and stop
       'transitionend webkitTransitionEnd msTransitionEnd otransitionend oTransitionEnd'.split(' ').forEach((e) => {
         container.addEventListener(e, () => {
           if (this.moving) {
