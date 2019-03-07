@@ -16,7 +16,9 @@
 
 Click the avatar at the top-left or touch(click) and drag to right(left).
 
-![Demo](assets/demo.gif)
+![Demo](assets/demo.png)
+
+If the image is not animating, maybe your browser does not supports `APNG`, you could turn to the [GIF demo](assets/demo.gif).
 
 ## Dependencies
 * [Vue.js](http://vuejs.org) (2.x)

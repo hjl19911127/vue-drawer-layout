@@ -10,13 +10,15 @@
 
 [http://share.codehuang.com/vue-drawer-layout](http://share.codehuang.com/vue-drawer-layout)
 
-[自制的高仿移动QQ（点我或扫下面的二维码）](http://chat.codehuang.com/message)
+[QQ APP 的抽屉效果（点我或扫下面的二维码）](http://chat.codehuang.com/message)
 
 ![试一试](assets/qrcode.png)
 
-然后点击页面中左上角的头像打开drawer或者向右向左拖拽
+点击页面中左上角的头像打开drawer或者向右向左拖拽
 
-![演示](assets/demo.gif)
+![演示](assets/demo.png)
+
+如果图片没有动画, 说明你的浏览器不支持`APNG`, 点[示例](assets/demo.gif)查看GIF的动图
 
 ## 依赖
 * [Vue.js](http://vuejs.org) (2.x)
