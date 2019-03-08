@@ -6,4 +6,5 @@ branches:
     - master
 script:
   - npm run test
+after_success:
   - ./node_modules/.bin/codecov
