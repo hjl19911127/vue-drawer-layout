@@ -23,6 +23,7 @@
   export default {
     name: 'vue-drawer-layout',
     props: {
+
       drawerWidth: {
         type: Number
       },
@@ -129,7 +130,7 @@
         this.width = typeof this.width === "undefined" ? defaultWidth : this.width
         this.distance = typeof this.distance === "undefined" ? defaultWidth : this.distance
       }
-      const {width, reverse, canAnimate} = this
+
       let t1, t2, speed, startX, startY, nowX, nowY, lastX, startPos, isVertical
       //Start dragging handler
       const initDrag = function (e) {
@@ -146,6 +147,7 @@
       }.bind(this)
       //During dragging handler
       const drag = function (e) {
+        const {width, reverse} = this
         t1 = t2
         t2 = +new Date()
         lastX = nowX
@@ -173,6 +175,7 @@
       }.bind(this)
       //Stop dragging handler
       const removeDrag = function () {
+        const {width, canAnimate} = this
         if (isVertical !== undefined) {
           if (!isVertical) {
             let pos = this.pos
@@ -198,6 +201,7 @@
       //Check transitionend and stop
       'transitionend webkitTransitionEnd msTransitionEnd otransitionend oTransitionEnd'.split(' ').forEach((e) => {
         container.addEventListener(e, () => {
+          const {width} = this
           if (this.moving) {
             this.moving = false
             this.willChange = false
