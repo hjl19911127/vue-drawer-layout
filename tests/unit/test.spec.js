@@ -27,11 +27,11 @@ describe('Installation Cases', () => {
 })
 
 describe('Using Cases', () => {
-  test('renders with default width (80 percent of its container\'s width) when passed', () => {
+  test('renders with default width (80 percent of itself\'s width) when passed', () => {
     const localVue = createLocalVue()
     localVue.use(DrawerLayoutPlugin)
     const wrapper = mount({
-      template: '<div style="width: 1000px;"><vue-drawer-layout /></div>'
+      template: '<vue-drawer-layout style="width: 1000px;"/>'
     }, {
       localVue,
       attachToDocument: true
@@ -52,15 +52,15 @@ describe('Using Cases', () => {
       propsData: {drawerWidth: 800, drawableDistance: 800},
       attachToDocument: true
     })
-    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translate3d(0,0,0)')
+    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translateX(0)')
     wrapper.vm.toggle(true)
-    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translate3d(800px,0,0)')
+    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translateX(800px)')
     wrapper.vm.toggle(false)
-    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translate3d(0,0,0)')
+    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translateX(0)')
     wrapper.vm.toggle()
-    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translate3d(800px,0,0)')
+    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translateX(800px)')
     wrapper.vm.toggle()
-    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translate3d(0,0,0)')
+    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translateX(0)')
   })
   test('renders reverse prop when passed', () => {
     const wrapper = shallowMount(DrawerLayout, {
@@ -69,20 +69,20 @@ describe('Using Cases', () => {
     })
     expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('right: -800px')
     wrapper.vm.toggle(true)
-    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translate3d(-800px,0,0)')
+    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translateX(-800px)')
     wrapper.vm.toggle(false)
-    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translate3d(0,0,0)')
+    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translateX(0)')
   })
   test('renders with contentDrawable when passed', () => {
     const wrapper = shallowMount(DrawerLayout, {
       propsData: {drawerWidth: 800, drawableDistance: 800, contentDrawable: true},
       attachToDocument: true
     })
-    expect(wrapper.find('.content-wrap').attributes().style).toMatch('transform: translate3d(0,0,0)')
+    expect(wrapper.find('.content-wrap').attributes().style).toMatch('transform: translateX(0)')
     wrapper.vm.toggle(true)
-    expect(wrapper.find('.content-wrap').attributes().style).toMatch('transform: translate3d(800px,0,0)')
+    expect(wrapper.find('.content-wrap').attributes().style).toMatch('transform: translateX(800px)')
     wrapper.vm.toggle(false)
-    expect(wrapper.find('.content-wrap').attributes().style).toMatch('transform: translate3d(0,0,0)')
+    expect(wrapper.find('.content-wrap').attributes().style).toMatch('transform: translateX(0)')
   })
   test('using with mask when passed', () => {
     const wrapper = shallowMount(DrawerLayout, {
@@ -112,7 +112,7 @@ describe('Using Cases', () => {
       clientX: 100,
       clientY: 0,
     })
-    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translate3d(800px,0,0)')
+    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translateX(800px)')
     wrapper.trigger('mousedown', {
       clientX: 100,
       clientY: 0,
@@ -125,7 +125,7 @@ describe('Using Cases', () => {
       clientX: 0,
       clientY: 0,
     })
-    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translate3d(0,0,0)')
+    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translateX(0)')
   })
   test('vertical move with mouse when passed', () => {
     const wrapper = shallowMount(DrawerLayout, {
@@ -144,7 +144,7 @@ describe('Using Cases', () => {
       clientX: 0,
       clientY: 100,
     })
-    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translate3d(0,0,0)')
+    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translateX(0)')
     wrapper.trigger('mousedown', {
       clientX: 0,
       clientY: 100,
@@ -157,7 +157,7 @@ describe('Using Cases', () => {
       clientX: 0,
       clientY: 0,
     })
-    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translate3d(0,0,0)')
+    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translateX(0)')
   })
   test('move sidling with mouse when passed', () => {
     const wrapper = shallowMount(DrawerLayout, {
@@ -176,7 +176,7 @@ describe('Using Cases', () => {
       clientX: 100,
       clientY: 10,
     })
-    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translate3d(800px,0,0)')
+    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translateX(800px)')
     wrapper.trigger('mousedown', {
       clientX: 100,
       clientY: 10,
@@ -189,6 +189,6 @@ describe('Using Cases', () => {
       clientX: 0,
       clientY: 0,
     })
-    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translate3d(0,0,0)')
+    expect(wrapper.find('.drawer-wrap').attributes().style).toMatch('transform: translateX(0)')
   })
 })

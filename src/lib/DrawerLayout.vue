@@ -24,10 +24,10 @@ const transformMap = {
   nowX: 'nowY',
   lastX: 'lastY',
   nowY: 'nowX',
-  start: 'nowX'
+  startY: 'startX'
 };
 export default {
-  name: 'vue-drawer-layout',
+  name: 'VueDrawerLayout',
   props: {
     drawerWidth: {
       type: Number
